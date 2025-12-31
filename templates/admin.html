@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel | LR Fragrances</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <h1>LR Fragrances Admin</h1>
+        </div>
+    </header>
+
+    <section class="shop-header">
+        <h2>Add New Product</h2>
+    </section>
+
+    <section class="products">
+        <form action="/admin/add" method="POST" enctype="multipart/form-data" class="product-card">
+            <input type="text" name="name" placeholder="Product Name" required>
+            <input type="number" name="price" placeholder="Price (PKR)" required>
+            <input type="number" name="discount" placeholder="Discount %" value="0">
+            <input type="text" name="size" placeholder="Size (e.g. 100ml)" required>
+            <textarea name="description" placeholder="Description"></textarea>
+            <input type="file" name="image" required>
+            <button class="btn-primary" type="submit">Add Product</button>
+        </form>
+    </section>
+
+    <section class="shop-header">
+        <h2>Existing Products</h2>
+    </section>
+
+    <section class="products">
+        {% for product in products %}
+        <div class="product-card">
+            <img src="{{ url_for('static', filename='images/products/' ~ product.image) }}" width="100%">
+            <div class="product-info">
+                <h3>{{ product.name }}</h3>
+                <p>PKR {{ product.price }}</p>
+                <a href="/admin/delete/{{ product.id }}" class="btn-secondary">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+
+</body>
+
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Support | LR Fragrances</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- HEADER -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/products/monogram.jpeg') }}" alt="LR Logo" class="logo-img">
+            <h1>LR Fragrances</h1>
+        </div>
+    
+        <nav>
+            <a href="/">Home</a>
+            <a href="/shop">Shop</a>
+            <a href="/cart"><i class="fa-solid fa-cart-shopping"></i>({{ cart_count }})</a>
+        </nav>
+    </header>
+
+    <style>
+        body {
+            background: #111;
+            color: #fff;
+        }
+
+        .support-container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 50px 20px;
+        }
+
+        .support-title {
+            text-align: center;
+            font-size: 36px;
+            color:  #d7a719;
+            margin-bottom: 40px;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .support-card {
+            background: #1a1a1a;
+            border-radius: 14px;
+            padding: 25px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .support-card:hover {
+            transform: translateY(-5px);
+            border-color: #d7a719;
+        }
+
+        .support-card i {
+            font-size: 32px;
+            color: #d7a719;
+            margin-bottom: 15px;
+        }
+
+        .support-card h3 {
+            margin-bottom: 12px;
+        }
+
+        .support-card p {
+            font-size: 14px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .support-card a {
+            display: inline-block;
+            margin-top: 12px;
+            color: #d7a719;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Forms */
+        .support-form {
+            margin-top: 15px;
+        }
+
+        .support-form input,
+        .support-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            background: #111;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 6px;
+        }
+
+        .support-form button {
+            background: #d7a719;
+            color: #111;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .support-form button:hover {
+            opacity: 0.9;
+        }
+        /* Accordion */
+        .accordion-btn {
+            width: 100%;
+            background: #1a1a1a;
+            color: #d7a719;
+            padding: 14px;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+
+.accordion-content {
+    display: none;
+    padding: 15px;
+    background: #111;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <section class="support-container">
+
+        <h1 class="support-title">Customer Support</h1>
+
+        <div class="support-grid">
+
+            <!-- Return Form -->
+            <div class="support-card">
+                <i class="fa-solid fa-rotate-left"></i>
+                <h3>Return Request</h3>
+                <p>Submit a return request within 7 days of delivery. Items must be unused and sealed.</p>
+
+                <form method="POST" action="/submit-return" class="support-form">
+                    <input type="text" name="order_id" placeholder="Order ID" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <textarea name="reason" placeholder="Reason"></textarea>
+                    <button type="submit">Submit Return</button>
+                </form>
+
+            </div>
+
+            <!-- Track Order -->
+            <div class="support-card">
+                <i class="fa-solid fa-truck-fast"></i>
+                <h3>Track Your Order</h3>
+                <p>Track the status of your order using your Order ID.</p>
+
+                <form class="support-form">
+                    <input type="text" placeholder="Enter Order ID" required>
+                    <button type="submit">Track Order</button>
+                </form>
+            </div>
+
+            <!-- Shipping Policy -->
+            <div class="support-card">
+                <i class="fa-solid fa-box"></i>
+                <h3>Shipping Policy</h3>
+                <p>
+                    Orders are delivered within 3–5 working days across Pakistan.
+                    Cash on Delivery is available nationwide.
+                </p>
+                <a href="#">Read Full Policy</a>
+            </div>  
+
+            <!-- Privacy Policy -->
+            <div class="support-card">
+                <i class="fa-solid fa-user-shield"></i>
+                <h3>Privacy Policy</h3>
+                <p>
+                    Your personal data is secure with us. We never share customer information with third parties.
+                </p>
+                <a href="#">Read Privacy Policy</a>
+            </div>
+
+            <!-- Terms of Service -->
+            <div class="support-card">
+                <i class="fa-solid fa-file-contract"></i>
+                <h3>Terms of Service</h3>
+                <p>
+                    By using our website, you agree to our terms, conditions, and policies.
+                </p>
+                <a href="#">Read Terms</a>
+            </div>
+
+            <!-- Contact Support -->
+            <div class="support-card">
+                <i class="fa-solid fa-headset"></i>
+                <h3>Need Help?</h3>
+                <p>
+                    Our support team is available via WhatsApp and Email to assist you.
+                </p>
+                <a href="https://wa.me/message/S2X7CX7MZK75F1" target="_blank">Chat on WhatsApp</a>
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

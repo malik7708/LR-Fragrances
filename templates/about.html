@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>About Us | LR Fragrances</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* General layout */
+       body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .logo h1 {
+            color:#d7a719;
+            margin: 0;
+        }
+
+        .hero-section {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            gap: 40px;
+            background-color: #222;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-text h2 {
+            font-size: 36px;
+            color:#d7a719;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #fff5f5;
+        }
+
+        .hero-image img {
+            width: 400px;
+            height: auto;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Founder section */
+        .founder-section {
+            background-color: #111;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .founder-section h2 {
+            font-size: 32px;
+            color:#d7a719;
+            margin-bottom: 30px;
+        }
+
+        .founder-card {
+            display: inline-block;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 14px;
+            width: 250px;
+            margin: 15px;
+            vertical-align: top;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .founder-card:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(255, 193, 7, 0.5);
+        }
+
+        .founder-card img {
+            width: 100%;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .founder-card h3 {
+            margin: 0;
+            color:#d7a719;
+        }
+
+        .founder-card p {
+            color: #ddd;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* Footer spacing */
+        footer {
+            height: 50px;
+        }
+
+        @media(max-width: 900px) {
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-image img {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/products/monogram.jpeg') }}" alt="LR Logo" class="logo-img">
+            <h1>LR Fragrances</h1>
+        </div>  
+        <nav>
+            <a href="/">Home</a>
+            <a href="/shop">Shop</a>
+            <a href="/cart"><i class="fa-solid fa-cart-shopping"></i>({{ cart_count }})</a>
+        </nav>
+    </header>
+
+    <!-- Hero / Brand Story -->
+    <section class="hero-section">
+        <div class="hero-text">
+            <h2>Our Story</h2>
+            <p>
+                Founded in 4th Sep,2024, LR Fragrances is dedicated to bringing luxury scents to every individual.
+                With a passion for quality and elegance, we craft perfumes that leave lasting impressions.
+                Every bottle represents sophistication, confidence, and the art of fine fragrance.
+            </p>
+        </div>
+        <div class="hero-image">
+            <img src="{{ url_for('static', filename='images/products/hero-placeholder.jpg') }}" alt="LR Fragrances">
+        </div>
+    </section>
+
+    <!-- Founder / Team -->
+    <section class="founder-section">
+        <h2>Meet Our Founder</h2>
+        <div class="founder-card">
+            <img src="{{ url_for('static', filename='images/products/founder-placeholder.jpeg') }}" alt="Founder">
+            <h3>Lattif Ur Rehman</h3>
+            <p>
+                <b>Lattif Ur Rehman</b> founded LR Fragrances with a vision to create unique, high-quality perfumes
+                for every occasion. With years of experience in the fragrance industry, Alex continues
+                to innovate and inspire the team to craft scents that captivate the senses.
+            </p>
+        </div>
+    </section>
+
+    <footer><footer class="footer">
+        <p>© 2025 LR Fragrances. All Rights Reserved.</p>
+    </footer></footer>
+
+</body>
+
+</html>
