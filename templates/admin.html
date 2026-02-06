@@ -1,53 +1,1082 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Admin Panel | LR Fragrances</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<body>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
 
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Existing CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+
+    <!-- Animations CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animations.css') }}"
+    />
+
+    <!-- PREMIUM ADMIN STYLES -->
+    <style>
+      /* ================== MOBILE-FIRST FOUNDATION ================== */
+      /* SECTIONS - Mobile First */
+      .section {
+        padding: 30px 16px;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        text-align: center;
+        color: #d7a719;
+        margin-bottom: 24px;
+        font-weight: 600;
+      }
+
+      /* BUTTONS - Mobile First */
+      .btn-primary {
+        background: linear-gradient(135deg, #d7a719, #b58b14);
+        color: #000;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 14px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(215, 167, 25, 0.4);
+        color: black;
+      }
+
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 10px 14px;
+        margin: 4px 2px;
+        border-radius: 22px;
+        border: 1px solid #d7a719;
+        color: #d7a719;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: transparent;
+        min-height: 40px;
+      }
+
+      .btn-secondary:hover {
+        background: #d7a719;
+        color: #000;
+        transform: translateY(-2px);
+      }
+
+      /* PRODUCT CARD / FORM */
+      .product-card {
+        background: linear-gradient(145deg, #151515, #0f0f0f);
+        border-radius: 16px;
+        padding: 18px;
+        border: 1px solid rgba(215, 167, 25, 0.25);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        transition: transform 0.3s ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-5px);
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px 13px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        background: #1b1b1b;
+        border: 1px solid #333;
+        color: #fff;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #d7a719;
+        box-shadow: 0 0 0 2px rgba(215, 167, 25, 0.3);
+      }
+
+      textarea {
+        resize: none;
+        min-height: 80px;
+      }
+
+      /* PRODUCTS GRID - Mobile First (1 column) */
+      .products {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .product-card img {
+        width: 100%;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        height: 150px;
+        object-fit: cover;
+      }
+
+      .product-info h3 {
+        font-size: 16px;
+        color: #fff;
+        margin-bottom: 6px;
+        word-break: break-word;
+      }
+
+      .product-price {
+        color: #d7a719;
+        font-weight: 600;
+        margin-bottom: 6px;
+        font-size: 15px;
+      }
+
+      .product-discount {
+        color: #28a745;
+        font-size: 12px;
+        margin: 4px 0;
+      }
+
+      .product-actions {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn-secondary {
+        flex: 1;
+        min-width: 80px;
+      }
+
+      .btn-delete {
+        border-color: #dc3545;
+        color: #dc3545;
+      }
+
+      .btn-delete:hover {
+        background: #dc3545;
+        color: white;
+      }
+
+      /* ================== MODALS ================== */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        animation: fadeIn 0.3s ease;
+        overflow-y: auto;
+        padding: 16px;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .modal-content {
+        background: linear-gradient(145deg, #151515, #0f0f0f);
+        margin: 40px auto 20px auto;
+        padding: 24px;
+        border: 1px solid rgba(215, 167, 25, 0.25);
+        border-radius: 16px;
+        width: 100%;
+        max-width: 480px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+        animation: slideUp 0.3s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(215, 167, 25, 0.2);
+      }
+
+      .modal-header h2 {
+        font-family: "Playfair Display", serif;
+        color: #d7a719;
+        margin: 0;
+        font-size: 20px;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        color: #d7a719;
+        font-size: 24px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        padding: 0;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .close-btn:hover {
+        color: #fff;
+      }
+
+      .modal-form input {
+        margin-bottom: 12px;
+        width: 100%;
+        padding: 11px 12px;
+        border-radius: 8px;
+        background: #1b1b1b;
+        border: 1px solid #333;
+        color: #fff;
+        font-size: 14px;
+      }
+
+      .modal-form input:focus {
+        outline: none;
+        border-color: #d7a719;
+        box-shadow: 0 0 0 2px rgba(215, 167, 25, 0.3);
+      }
+
+      .modal-form-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .modal-form-row input {
+        margin-bottom: 0;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .modal-actions button {
+        flex: 1;
+        padding: 11px;
+        border-radius: 22px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 13px;
+        min-height: 40px;
+      }
+
+      .btn-update {
+        background: linear-gradient(135deg, #d7a719, #b58b14);
+        color: #000;
+      }
+
+      .btn-update:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(215, 167, 25, 0.4);
+      }
+
+      .btn-cancel {
+        background: transparent;
+        border: 1px solid #666;
+        color: #999;
+      }
+
+      .btn-cancel:hover {
+        background: #333;
+        color: #fff;
+      }
+
+      /* ================== IMAGE PREVIEW ================== */
+      #preview {
+        border-radius: 12px;
+        border: 1px solid rgba(215, 167, 25, 0.3);
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        max-height: 200px;
+      }
+
+      /* ================== DASHBOARD STATS - Mobile First ================== */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .stat-card {
+        background: linear-gradient(145deg, #151515, #0f0f0f);
+        border-radius: 14px;
+        padding: 18px;
+        border: 1px solid rgba(215, 167, 25, 0.25);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        transition: transform 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-4px);
+      }
+
+      .stat-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #d7a719, #b58b14);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: #000;
+        flex-shrink: 0;
+      }
+
+      .stat-content h3 {
+        font-size: 20px;
+        color: #d7a719;
+        margin: 0 0 3px 0;
+        font-weight: 600;
+        word-break: break-word;
+      }
+
+      .stat-content p {
+        color: #ccc;
+        margin: 0;
+        font-size: 12px;
+      }
+
+      /* ================== ORDERS VERTICAL SLIDER - Mobile First ================== */
+      .orders-slider-container {
+        position: relative;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .slider-wrapper {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        display: flex;
+        gap: 12px;
+        align-items: stretch;
+      }
+
+      .orders-slider {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow-y: auto;
+        scroll-behavior: smooth;
+        padding: 12px 12px;
+        flex: 1;
+        max-height: 500px;
+        scrollbar-width: thin;
+        scrollbar-color: #d7a719 rgba(215, 167, 25, 0.1);
+      }
+
+      .orders-slider::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .orders-slider::-webkit-scrollbar-track {
+        background: rgba(215, 167, 25, 0.1);
+        border-radius: 10px;
+      }
+
+      .orders-slider::-webkit-scrollbar-thumb {
+        background: #d7a719;
+        border-radius: 10px;
+      }
+
+      .orders-slider::-webkit-scrollbar-thumb:hover {
+        background: #e5b933;
+      }
+
+      /* VERTICAL LINE DIVIDER */
+      .vertical-divider {
+        width: 3px;
+        background: linear-gradient(
+          180deg,
+          rgba(215, 167, 25, 0.2) 0%,
+          #d7a719 50%,
+          rgba(215, 167, 25, 0.2) 100%
+        );
+        border-radius: 2px;
+        margin: 8px 0;
+        position: relative;
+      }
+
+      .vertical-divider::before,
+      .vertical-divider::after {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: #d7a719;
+        border-radius: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 2px solid #0f0f0f;
+      }
+
+      .vertical-divider::before {
+        top: -8px;
+      }
+
+      .vertical-divider::after {
+        bottom: -8px;
+      }
+
+      .order-card {
+        background: linear-gradient(145deg, #151515, #0f0f0f);
+        border: 1px solid rgba(215, 167, 25, 0.25);
+        border-radius: 12px;
+        padding: 14px;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        flex: 0 0 auto;
+      }
+
+      .order-card:hover {
+        transform: translateX(4px);
+        box-shadow: 0 16px 50px rgba(215, 167, 25, 0.2);
+        border-color: rgba(215, 167, 25, 0.5);
+      }
+
+      .order-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(215, 167, 25, 0.1);
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .order-id {
+        font-weight: 700;
+        color: #d7a719;
+        font-size: 13px;
+        word-break: break-all;
+      }
+
+      .order-card-body p {
+        margin: 5px 0;
+        font-size: 11px;
+        color: #ccc;
+      }
+
+      .order-card-body strong {
+        color: #d7a719;
+      }
+
+      .order-total {
+        color: #28a745;
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      .order-card-empty {
+        background: linear-gradient(145deg, #151515, #0f0f0f);
+        border: 1px solid rgba(215, 167, 25, 0.25);
+        border-radius: 12px;
+        padding: 40px 20px;
+        text-align: center;
+        color: #666;
+        width: 100%;
+      }
+
+      /* SLIDER BUTTONS - Hidden for vertical */
+      .slider-btn {
+        display: none;
+      }
+
+      /* SLIDER DOTS - Hidden for vertical */
+      .slider-dots {
+        display: none;
+      }
+
+      /* ================== RESPONSIVE BREAKPOINTS ================== */
+
+      /* TABLET (600px and up) */
+      @media (min-width: 600px) {
+        .section {
+          padding: 36px 20px;
+        }
+
+        .section-title {
+          font-size: 26px;
+          margin-bottom: 28px;
+        }
+
+        .btn-secondary {
+          padding: 10px 16px;
+          margin: 5px 3px;
+          font-size: 13px;
+        }
+
+        .product-card {
+          padding: 20px;
+        }
+
+        .product-card img {
+          height: 160px;
+        }
+
+        .product-info h3 {
+          font-size: 17px;
+        }
+
+        .products {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 22px;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 18px;
+        }
+
+        .stat-card {
+          padding: 20px;
+          gap: 16px;
+        }
+
+        .stat-icon {
+          width: 56px;
+          height: 56px;
+          font-size: 22px;
+        }
+
+        .stat-content h3 {
+          font-size: 22px;
+        }
+
+        .stat-content p {
+          font-size: 13px;
+        }
+
+        .order-card {
+          flex: 0 0 auto;
+        }
+
+        .slider-wrapper {
+          flex-direction: column;
+        }
+
+        .orders-slider {
+          max-height: 450px;
+        }
+
+        .vertical-divider {
+          display: none;
+        }
+      }
+
+      /* DESKTOP (768px and up) */
+      @media (min-width: 768px) {
+        .section {
+          padding: 48px 32px;
+        }
+
+        .section-title {
+          font-size: 32px;
+          margin-bottom: 32px;
+        }
+
+        .btn-primary {
+          padding: 13px 24px;
+          font-size: 15px;
+        }
+
+        .btn-secondary {
+          padding: 10px 18px;
+          margin: 6px 4px;
+          font-size: 14px;
+        }
+
+        .product-card {
+          padding: 22px;
+        }
+
+        .product-card img {
+          height: 180px;
+        }
+
+        .product-info h3 {
+          font-size: 18px;
+        }
+
+        .products {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 28px;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(5, 1fr);
+          gap: 20px;
+          margin-bottom: 40px;
+        }
+
+        .stat-card {
+          flex-direction: column;
+          text-align: center;
+          padding: 22px;
+          gap: 12px;
+        }
+
+        .stat-icon {
+          width: 60px;
+          height: 60px;
+          font-size: 24px;
+        }
+
+        .stat-content h3 {
+          font-size: 24px;
+          margin: 5px 0;
+        }
+
+        .stat-content p {
+          font-size: 14px;
+        }
+
+        .order-card {
+          flex: 0 0 auto;
+        }
+
+        .orders-slider {
+          max-height: 600px;
+        }
+
+        .modal-content {
+          padding: 36px;
+          max-width: 520px;
+        }
+
+        .modal-header h2 {
+          font-size: 24px;
+        }
+
+        .modal-form-row {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .slider-btn {
+          display: none;
+        }
+
+        .slider-dots {
+          display: none;
+        }
+
+        .vertical-divider {
+          display: block;
+        }
+      }
+
+      /* LARGE DESKTOP (1024px and up) */
+      @media (min-width: 1024px) {
+        .section {
+          padding: 50px 40px;
+        }
+
+        .products {
+          gap: 30px;
+        }
+
+        .stats-grid {
+          gap: 22px;
+        }
+
+        .modal-content {
+          margin: 100px auto;
+        }
+      }
+
+      /* ================== HIDE SWIPE HINT ================== */
+      .orders-table-container::after {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
+        .orders-table-container::after {
+          content: "← Swipe →";
+          display: block;
+          text-align: center;
+          font-size: 11px;
+          color: #888;
+          padding: 6px 0;
+          margin-top: 4px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
     <header class="navbar">
-        <div class="logo">
-            <h1>LR Fragrances Admin</h1>
-        </div>
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/products/monogram.jpeg') }}"
+          class="logo-img"
+        />
+        <h1>LR Fragrances</h1>
+      </div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav-menu">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+        <a href="/shop">Shop</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+        <a href="/cart"
+          ><i class="fa-solid fa-cart-shopping"></i> ({{ cart_count }})</a
+        >
+      </nav>
     </header>
 
-    <section class="shop-header">
-        <h2>Add New Product</h2>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- ADMIN HEADER -->
+    <section class="section">
+      <h2 class="section-title">Admin Dashboard</h2>
+
+      <div style="text-align: center">
+        <a href="/admin/change-password" class="btn-secondary"
+          >Change Password</a
+        >
+        <a href="/admin-logout" class="btn-secondary">Logout</a>
+      </div>
     </section>
 
-    <section class="products">
-        <form action="/admin/add" method="POST" enctype="multipart/form-data" class="product-card">
-            <input type="text" name="name" placeholder="Product Name" required>
-            <input type="number" name="price" placeholder="Price (PKR)" required>
-            <input type="number" name="discount" placeholder="Discount %" value="0">
-            <input type="text" name="size" placeholder="Size (e.g. 100ml)" required>
-            <textarea name="description" placeholder="Description"></textarea>
-            <input type="file" name="image" required>
-            <button class="btn-primary" type="submit">Add Product</button>
+    <!-- DASHBOARD STATS -->
+    <section class="section">
+      <h2 class="section-title">Dashboard Overview</h2>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-box"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ stats.total_products }}</h3>
+            <p>Total Products</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ stats.total_orders }}</h3>
+            <p>Total Orders</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-dollar-sign"></i>
+          </div>
+          <div class="stat-content">
+            <h3>PKR {{ "{:,}".format(stats.total_revenue) }}</h3>
+            <p>Total Revenue</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-undo"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ stats.pending_returns }}</h3>
+            <p>Pending Returns</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-ticket-alt"></i>
+          </div>
+          <div class="stat-content">
+            <h3>{{ stats.open_tickets }}</h3>
+            <p>Open Support Tickets</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECENT ORDERS SLIDER -->
+    <section class="section">
+      <h2 class="section-title">Recent Orders</h2>
+
+      <div class="orders-slider-container">
+        <div class="slider-wrapper">
+          <div class="orders-slider" id="ordersSlider">
+            {% for order in recent_orders %}
+            <div class="order-card animate-card">
+              <div class="order-card-header">
+                <span class="order-id">{{ order.order_id }}</span>
+                <span class="status-badge status-{{ order.status.lower() }}">
+                  {{ order.status }}
+                </span>
+              </div>
+              <div class="order-card-body">
+                <p><strong>Customer:</strong> {{ order.email }}</p>
+                <p><strong>Items:</strong> {{ order.item_count }}</p>
+                <p>
+                  <strong>Total:</strong>
+                  <span class="order-total"
+                    >PKR {{ "{:,}".format(order.total or 0) }}</span
+                  >
+                </p>
+                <p><strong>Date:</strong> {{ order.created_at }}</p>
+              </div>
+            </div>
+            {% else %}
+            <div class="order-card-empty">
+              <p>No orders found</p>
+            </div>
+            {% endfor %}
+          </div>
+
+          <!-- VERTICAL LINE DIVIDER -->
+          <div class="vertical-divider" id="verticalDivider"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADD PRODUCT -->
+    <section class="section">
+      <h2 class="section-title">Add New Product</h2>
+
+      <div style="max-width: 520px; margin: auto">
+        <form
+          action="/admin/add"
+          method="POST"
+          enctype="multipart/form-data"
+          class="product-card"
+        >
+          <input type="text" name="name" placeholder="Product Name" required />
+          <input
+            type="number"
+            name="price"
+            placeholder="Price (PKR)"
+            required
+          />
+          <input
+            type="number"
+            name="discount"
+            placeholder="Discount %"
+            value="0"
+          />
+          <input
+            type="text"
+            name="size"
+            placeholder="Size (e.g. 100ml)"
+            required
+          />
+          <textarea
+            name="description"
+            placeholder="Short Description"
+          ></textarea>
+
+          <img id="preview" style="display: none; margin-bottom: 12px" />
+          <input
+            type="file"
+            name="image"
+            required
+            onchange="previewImage(event)"
+          />
+
+          <button class="btn-primary" type="submit" style="width: 100%">
+            Add Product
+          </button>
         </form>
+      </div>
     </section>
 
-    <section class="shop-header">
-        <h2>Existing Products</h2>
-    </section>
+    <!-- PRODUCTS LIST -->
+    <section class="section">
+      <h2 class="section-title">Existing Products</h2>
 
-    <section class="products">
+      <div class="products">
         {% for product in products %}
         <div class="product-card">
-            <img src="{{ url_for('static', filename='images/products/' ~ product.image) }}" width="100%">
-            <div class="product-info">
-                <h3>{{ product.name }}</h3>
-                <p>PKR {{ product.price }}</p>
-                <a href="/admin/delete/{{ product.id }}" class="btn-secondary">Delete</a>
+          <img
+            src="{{ url_for('static', filename='images/products/' ~ product.image) }}"
+            alt="{{ product.name }}"
+          />
+
+          <div class="product-info">
+            <h3>{{ product.name }}</h3>
+            <p class="product-price">PKR {{ product.price }}</p>
+            {% if product.discount > 0 %}
+            <p class="product-discount">
+              <i class="fas fa-tag"></i> {{ product.discount }}% OFF
+            </p>
+            {% endif %}
+
+            <div class="product-actions">
+              <a
+                href="/admin/edit-product/{{ product.id }}"
+                class="btn-secondary"
+              >
+                <i class="fas fa-edit"></i> Edit
+              </a>
+              <a
+                href="/admin/delete/{{ product.id }}"
+                class="btn-secondary btn-delete"
+                onclick="
+                  return confirm(
+                    'Are you sure you want to delete this product?',
+                  );
+                "
+              >
+                <i class="fas fa-trash"></i> Delete
+              </a>
             </div>
+          </div>
         </div>
         {% endfor %}
+      </div>
     </section>
 
-</body>
+    <script>
+      function previewImage(event) {
+        const img = document.getElementById("preview");
+        img.src = URL.createObjectURL(event.target.files[0]);
+        img.style.display = "block";
+      }
+    </script>
+    <!-- JS (FIXED) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.getElementById("hamburger");
+        const nav = document.getElementById("nav-menu");
+        const overlay = document.getElementById("navOverlay");
 
+        hamburger.addEventListener("click", () => {
+          hamburger.classList.toggle("active");
+          nav.classList.toggle("active");
+          overlay.classList.toggle("active");
+        });
+
+        overlay.addEventListener("click", closeMenu);
+
+        document.querySelectorAll("#nav-menu a").forEach((link) => {
+          link.addEventListener("click", closeMenu);
+        });
+
+        function closeMenu() {
+          hamburger.classList.remove("active");
+          nav.classList.remove("active");
+          overlay.classList.remove("active");
+        }
+      });
+    </script>
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+      // Initialize theme from localStorage
+      const themeToggle = document.getElementById("themeToggle");
+      const savedTheme = localStorage.getItem("theme") || "dark-theme";
+
+      document.body.classList.add(savedTheme);
+      updateThemeIcon();
+
+      // Toggle theme on button click
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.body.classList.contains("dark-theme");
+
+        if (isDark) {
+          document.body.classList.remove("dark-theme");
+          document.body.classList.add("light-theme");
+          localStorage.setItem("theme", "light-theme");
+        } else {
+          document.body.classList.remove("light-theme");
+          document.body.classList.add("dark-theme");
+          localStorage.setItem("theme", "dark-theme");
+        }
+        updateThemeIcon();
+      });
+
+      function updateThemeIcon() {
+        const isDark = document.body.classList.contains("dark-theme");
+        themeToggle.innerHTML = isDark
+          ? '<i class="fas fa-moon"></i>'
+          : '<i class="fas fa-sun"></i>';
+      }
+    </script>
+  </body>
 </html>

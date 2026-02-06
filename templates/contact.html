@@ -1,204 +1,437 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Us | LR Fragrances</title>
 
     <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap"
-        rel="stylesheet">
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Main CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+
+    <!-- Animations CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animations.css') }}"
+    />
 
     <style>
-        /* ======= GENERAL ======= */
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #2e2e2e;
-        }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #302d2d;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
 
-        h1,
-        h2,
-        h3 {
-            font-family: 'Playfair Display', serif;
-        }
+      h1,
+      h2,
+      h3 {
+        font-family: "Playfair Display", serif;
+      }
 
-        a {
-            text-decoration: none;
-        }
+      a {
+        text-decoration: none;
+      }
 
-        /* ======= HERO SECTION ======= */
-        .hero-section {
-            text-align: center;
-            padding: 60px 20px 40px;
-            background-color: #fffefe;
-        }
+      /* ======= HERO SECTION ======= */
+      .hero-section {
+        text-align: center;
+        padding: 60px 20px 40px;
+        background-color: #fffefe;
+      }
 
-        .hero-section h2 {
-            font-size: 42px;
-            color: #111;
-            margin-bottom: 10px;
-        }
+      .hero-section h2 {
+        font-size: 42px;
+        color: #111;
+        margin-bottom: 10px;
+      }
 
-        .hero-section p {
-            color: #505050;
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+      .hero-section p {
+        color: #505050;
+        font-size: 18px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
 
-        /* ======= CONTACT SECTION ======= */
+      /* ======= CONTACT SECTION ======= */
+      .contact-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 50px;
+        padding: 40px 20px;
+        color: #505050;
+        background-color: #393c25;
+      }
+
+      .contact-form,
+      .contact-info {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        flex: 1 1 350px;
+      }
+
+      .contact-form h3,
+      .contact-info h3 {
+        color: #d7a719;
+        margin-bottom: 20px;
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        width: 95%;
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        border: 1px solid #a49898;
+        border-radius: 6px;
+        font-size: 16px;
+      }
+
+      .contact-form button {
+        background-color: #d7a719;
+        color: #000000;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+
+      .contact-form button:hover {
+        background-color: #b58e15;
+      }
+
+      .contact-info p {
+        font-size: 16px;
+        color: #333;
+        margin: 12px 0;
+      }
+
+      .contact-info i {
+        color: #d7a719;
+        margin-right: 10px;
+      }
+      /* ===== TOAST MESSAGE ===== */
+      .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        min-width: 280px;
+        padding: 15px 20px;
+        background: #111;
+        color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        font-size: 15px;
+        z-index: 9999;
+        opacity: 0;
+        transform: translateY(-20px);
+        animation:
+          slideIn 0.4s forwards,
+          fadeOut 0.4s 3.6s forwards;
+      }
+
+      .toast.success {
+        border-left: 5px solid #d7a719;
+      }
+
+      .toast.error {
+        border-left: 5px solid #e74c3c;
+      }
+
+      @keyframes slideIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+      }
+
+      /* ======= RESPONSIVE ======= */
+      @media (max-width: 768px) {
         .contact-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 50px;
-            padding: 40px 20px;
+          flex-direction: column;
+          gap: 30px;
         }
-
-        .contact-form,
-        .contact-info {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            flex: 1 1 350px;
-        }
-
-        .contact-form h3,
-        .contact-info h3 {
-            color: #d7a719;
-            margin-bottom: 20px;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            width: 95%;
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            border: 1px solid #a49898;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        .contact-form button {
-            background-color: #d7a719;
-            color: #000000;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .contact-form button:hover {
-            background-color: #b58e15;
-        }
-
-        .contact-info p {
-            font-size: 16px;
-            color: #333;
-            margin: 12px 0;
-        }
-
-        .contact-info i {
-            color: #d7a719;
-            margin-right: 10px;
-        }
-
-        .social-icons {
-            margin-top: 15px;
-        }
-
-        .social-icons a {
-            color: #111;
-            margin-right: 15px;
-            font-size: 20px;
-            transition: 0.3s;
-        }
-
-        .social-icons a:hover {
-            color: #d7a719;
-        }
-
-        /* ======= FOOTER ======= */
-        .footer {
-            text-align: center;
-            padding: 30px 20px;
-            background-color: #111;
-            color: #fff;
-        }
-
-        /* ======= RESPONSIVE ======= */
-        @media (max-width: 768px) {
-            .contact-container {
-                flex-direction: column;
-                gap: 30px;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
+  <body>
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %}
+    <div class="toast {{ category }}">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %}
 
-<body>
-    <!-- HEADER -->
-   
+    <header class="navbar">
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/products/monogram.jpeg') }}"
+          class="logo-img"
+        />
+        <h1>LR Fragrances</h1>
+      </div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav-menu" class="">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+        <a href="/shop">Shop</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+        <a href="/cart"
+          ><i class="fa-solid fa-cart-shopping"></i> ({{ cart_count }})</a
+        >
+      </nav>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
     <!-- HERO -->
     <section class="hero-section">
-        <h2>Get in Touch with Us</h2>
-        <p>Have questions or feedback? Fill out the form below or use our contact details to reach us directly.</p>
+      <h2>Get in Touch with Us</h2>
+      <p>
+        Have questions or feedback? Fill out the form below or use our contact
+        details to reach us directly.
+      </p>
     </section>
 
     <!-- CONTACT SECTION -->
     <section class="contact-container">
-        <!-- CONTACT FORM -->
-        <div class="contact-form">
-            <h3>Send Us a Message</h3>
-            <form action="/contact" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" rows="6" placeholder="Your Message" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
+      <!-- CONTACT FORM -->
+      <div class="contact-form">
+        <h3>Send Us a Message</h3>
+        <form action="/contact" method="POST">
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <textarea
+            name="message"
+            rows="6"
+            placeholder="Your Message"
+            required
+          ></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
 
-            <!-- Popup Alert for Flash Messages -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            <script>
-                {% for category, message in messages %}
-                alert("{{ message }}");
-                {% endfor %}
-            </script>
-            {% endif %}
-            {% endwith %}
+      <!-- CONTACT INFO -->
+      <div class="contact-info">
+        <h3>Contact Information</h3>
+        <p><i class="fa-solid fa-phone"></i> +92 300 1234567</p>
+        <p><i class="fa-solid fa-envelope"></i> lrfragrancess@gmail.com</p>
+        <p><i class="fa-solid fa-location-dot"></i> Pakistan</p>
+        <div class="social-icons">
+          <a
+            href="https://www.facebook.com/share/16mTFkThmz/"
+            target="_blank"
+            class="animate-social-icon"
+            ><i class="fa-brands fa-facebook-f"></i
+          ></a>
+          <a
+            href="https://www.instagram.com/lrperfumes5"
+            target="_blank"
+            class="animate-social-icon"
+            ><i class="fa-brands fa-instagram"></i
+          ></a>
+          <a
+            href="https://www.tiktok.com/@lrperfumes5"
+            target="_blank"
+            class="animate-social-icon"
+            ><i class="fa-brands fa-tiktok"></i
+          ></a>
         </div>
-
-        <!-- CONTACT INFO -->
-        <div class="contact-info">
-            <h3>Contact Information</h3>
-            <p><i class="fa-solid fa-phone"></i> +92 300 1234567</p>
-            <p><i class="fa-solid fa-envelope"></i> support@lrfragrances.com</p>
-            <p><i class="fa-solid fa-location-dot"></i> Pakistan</p>
-            <div class="social-icons">
-                <a href="https://www.facebook.com/share/16mTFkThmz/" target="_blank"><i
-                        class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/lrperfumes5" target="_blank"><i
-                        class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@lrperfumes5" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-            </div>
-        </div>
+      </div>
     </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <p>© 2025 LR Fragrances. All Rights Reserved.</p>
+    <hr
+      style="
+        margin-top: 40px;
+        margin-bottom: 40px;
+        border: none;
+        border-top: 1px solid #757272;
+      "
+    />
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer animate-fade-in">
+      <div class="footer-container">
+        <div class="footer-section animate-fade-in-up stagger-item-1">
+          <h4>About LR Fragrances</h4>
+          <p>
+            Luxury fragrances for the discerning individual. Premium quality,
+            authentic products, delivered with care.
+          </p>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-2">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/shop" class="animate-link">Shop</a></li>
+            <li><a href="/about" class="animate-link">About Us</a></li>
+            <li><a href="/contact" class="animate-link">Contact</a></li>
+            <li><a href="/support" class="animate-link">Support</a></li>
+          </ul>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-3">
+          <h4>Policies</h4>
+          <ul>
+            <li>
+              <a href="{{ url_for('privacy_policy') }}" class="animate-link"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('terms') }}" class="animate-link"
+                >Terms & Conditons</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('shipping_policy') }}" class="animate-link"
+                >Shipping Info</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-4">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/share/16mTFkThmz/"
+              target="_blank"
+              aria-label="Facebook"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-facebook-f"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/lrperfumes5"
+              target="_blank"
+              aria-label="Instagram"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.tiktok.com/@lrperfumes5"
+              target="_blank"
+              aria-label="TikTok"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 LR Fragrances. All Rights Reserved.</p>
+      </div>
     </footer>
+    <!-- WHATSAPP BUTTON -->
+    <a
+      href="https://wa.me/message/S2X7CX7MZK75F1"
+      target="_blank"
+      class="whatsapp-btn animate-float"
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <script>
+      // Toast Message JS
+      document.addEventListener("DOMContentLoaded", () => {
+        const toasts = document.querySelectorAll(".toast");
+        toasts.forEach((toast) => {
+          setTimeout(() => {
+            toast.remove();
+          }, 4000); // Remove toast after 4 seconds
+        });
+      });
+    </script>
+    <!-- JS (FIXED) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.getElementById("hamburger");
+        const nav = document.getElementById("nav-menu");
+        const overlay = document.getElementById("navOverlay");
 
-</body>
+        hamburger.addEventListener("click", () => {
+          hamburger.classList.toggle("active");
+          nav.classList.toggle("active");
+          overlay.classList.toggle("active");
+        });
 
+        overlay.addEventListener("click", closeMenu);
+
+        document.querySelectorAll("#nav-menu a").forEach((link) => {
+          link.addEventListener("click", closeMenu);
+        });
+
+        function closeMenu() {
+          hamburger.classList.remove("active");
+          nav.classList.remove("active");
+          overlay.classList.remove("active");
+        }
+      });
+    </script>
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+      // Initialize theme from localStorage
+      const themeToggle = document.getElementById("themeToggle");
+      const savedTheme = localStorage.getItem("theme") || "dark-theme";
+
+      document.body.classList.add(savedTheme);
+      updateThemeIcon();
+
+      // Toggle theme on button click
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.body.classList.contains("dark-theme");
+
+        if (isDark) {
+          document.body.classList.remove("dark-theme");
+          document.body.classList.add("light-theme");
+          localStorage.setItem("theme", "light-theme");
+        } else {
+          document.body.classList.remove("light-theme");
+          document.body.classList.add("dark-theme");
+          localStorage.setItem("theme", "dark-theme");
+        }
+        updateThemeIcon();
+      });
+
+      function updateThemeIcon() {
+        const isDark = document.body.classList.contains("dark-theme");
+        themeToggle.innerHTML = isDark
+          ? '<i class="fas fa-moon"></i>'
+          : '<i class="fas fa-sun"></i>';
+      }
+    </script>
+  </body>
 </html>

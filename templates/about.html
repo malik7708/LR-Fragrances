@@ -1,171 +1,501 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-    <meta charset="UTF-8">
     <title>About Us | LR Fragrances</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+
+    <!-- Animations CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animations.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
-        /* General layout */
-       body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #1a1a1a;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-        }
+      /* General layout */
+      .hero-section {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        gap: 40px;
+        background-color: #222;
+      }
 
-        .logo h1 {
-            color:#d7a719;
-            margin: 0;
-        }
+      .hero-text {
+        max-width: 600px;
+      }
 
+      .hero-text h2 {
+        font-size: 36px;
+        color: #d7a719;
+        margin-bottom: 20px;
+      }
+
+      .hero-text p {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #fff5f5;
+      }
+
+      .hero-image img {
+        width: 400px;
+        height: auto;
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Founder section */
+      .founder-section {
+        background-color: #111;
+        padding: 60px 20px;
+        text-align: center;
+      }
+
+      .founder-section h2 {
+        font-size: 32px;
+        color: #d7a719;
+        margin-bottom: 30px;
+      }
+
+      .founder-card {
+        display: inline-block;
+        background-color: #222;
+        padding: 20px;
+        border-radius: 14px;
+        width: 250px;
+        margin: 15px;
+        vertical-align: top;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .founder-card:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 10px 30px rgba(255, 193, 7, 0.5);
+      }
+
+      .founder-card img {
+        width: 100%;
+        border-radius: 50%;
+        margin-bottom: 15px;
+      }
+
+      .founder-card h3 {
+        margin: 0;
+        color: #d7a719;
+      }
+
+      .founder-card p {
+        color: #ddd;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      /* Footer spacing */
+      footer {
+        height: 50px;
+      }
+
+      @media (max-width: 900px) {
         .hero-section {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-            gap: 40px;
-            background-color: #222;
-        }
-
-        .hero-text {
-            max-width: 600px;
-        }
-
-        .hero-text h2 {
-            font-size: 36px;
-            color:#d7a719;
-            margin-bottom: 20px;
-        }
-
-        .hero-text p {
-            font-size: 18px;
-            line-height: 1.6;
-            color: #fff5f5;
+          flex-direction: column;
+          text-align: center;
         }
 
         .hero-image img {
-            width: 400px;
-            height: auto;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+          width: 90%;
+        }
+      }
+
+      /* ================= MOBILE RESPONSIVENESS (ABOUT PAGE) ================= */
+
+      /* Tablets & small laptops */
+      @media (max-width: 1024px) {
+        .hero-section {
+          padding: 50px 24px;
+          gap: 30px;
+        }
+
+        .hero-text h2 {
+          font-size: 32px;
+        }
+
+        .hero-text p {
+          font-size: 16px;
+        }
+
+        .hero-image img {
+          width: 360px;
+        }
+      }
+
+      /* Mobile devices */
+      @media (max-width: 768px) {
+        .hero-section {
+          flex-direction: column;
+          padding: 40px 18px;
+          gap: 26px;
+        }
+
+        .hero-text {
+          max-width: 100%;
+        }
+
+        .hero-text h2 {
+          font-size: 26px;
+        }
+
+        .hero-text p {
+          font-size: 15px;
+          line-height: 1.7;
+        }
+
+        .hero-image img {
+          width: 100%;
+          max-width: 320px;
+          border-radius: 12px;
         }
 
         /* Founder section */
         .founder-section {
-            background-color: #111;
-            padding: 60px 20px;
-            text-align: center;
+          padding: 50px 18px;
         }
 
         .founder-section h2 {
-            font-size: 32px;
-            color:#d7a719;
-            margin-bottom: 30px;
+          font-size: 26px;
         }
 
         .founder-card {
-            display: inline-block;
-            background-color: #222;
-            padding: 20px;
-            border-radius: 14px;
-            width: 250px;
-            margin: 15px;
-            vertical-align: top;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .founder-card:hover {
-            transform: translateY(-6px) scale(1.03);
-            box-shadow: 0 10px 30px rgba(255, 193, 7, 0.5);
+          width: 100%;
+          max-width: 320px;
+          margin: 0 auto;
+          padding: 22px;
         }
 
         .founder-card img {
-            width: 100%;
-            border-radius: 50%;
-            margin-bottom: 15px;
+          width: 140px;
+          margin: 0 auto 15px;
+          display: block;
         }
 
         .founder-card h3 {
-            margin: 0;
-            color:#d7a719;
+          font-size: 18px;
         }
 
         .founder-card p {
-            color: #ddd;
-            font-size: 14px;
-            line-height: 1.4;
+          font-size: 14px;
+          line-height: 1.6;
+        }
+      }
+
+      /* Small phones */
+      @media (max-width: 480px) {
+        .hero-text h2 {
+          font-size: 24px;
         }
 
-        /* Footer spacing */
-        footer {
-            height: 50px;
+        .hero-text p {
+          font-size: 14px;
         }
 
-        @media(max-width: 900px) {
-            .hero-section {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .hero-image img {
-                width: 90%;
-            }
+        .founder-section h2 {
+          font-size: 24px;
         }
+
+        .founder-card {
+          padding: 20px;
+        }
+      }
+
+      /* ================= LIGHT THEME OVERRIDES FOR ABOUT PAGE ================= */
+      body.light-theme .hero-section {
+        background: linear-gradient(
+          135deg,
+          #fefdfb 0%,
+          #f5ede5 100%
+        ) !important;
+      }
+
+      body.light-theme .hero-text h2 {
+        color: #2c2c2c !important;
+      }
+
+      body.light-theme .hero-text p {
+        color: #5a5a5a !important;
+      }
+
+      body.light-theme .hero-image img {
+        box-shadow: 0 10px 30px rgba(201, 146, 42, 0.1) !important;
+      }
+
+      body.light-theme .founder-section {
+        background: linear-gradient(
+          135deg,
+          #fefdfb 0%,
+          #f5ede5 100%
+        ) !important;
+      }
+
+      body.light-theme .founder-section h2 {
+        color: #2c2c2c !important;
+      }
+
+      body.light-theme .founder-card {
+        background-color: #ffffff !important;
+        box-shadow: 0 4px 12px rgba(201, 146, 42, 0.08) !important;
+        border: 1px solid #e8dcc8 !important;
+      }
+
+      body.light-theme .founder-card:hover {
+        box-shadow: 0 10px 30px rgba(201, 146, 42, 0.15) !important;
+        border-color: #c9922a !important;
+      }
+
+      body.light-theme .founder-card h3 {
+        color: #2c2c2c !important;
+      }
+
+      body.light-theme .founder-card p {
+        color: #5a5a5a !important;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
-    <!-- Navbar -->
+  <body>
     <header class="navbar">
-        <div class="logo">
-            <img src="{{ url_for('static', filename='images/products/monogram.jpeg') }}" alt="LR Logo" class="logo-img">
-            <h1>LR Fragrances</h1>
-        </div>  
-        <nav>
-            <a href="/">Home</a>
-            <a href="/shop">Shop</a>
-            <a href="/cart"><i class="fa-solid fa-cart-shopping"></i>({{ cart_count }})</a>
-        </nav>
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/products/monogram.jpeg') }}"
+          class="logo-img"
+        />
+        <h1>LR Fragrances</h1>
+      </div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav-menu">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+        <a href="/shop">Shop</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+        <a href="/cart"
+          ><i class="fa-solid fa-cart-shopping"></i> ({{ cart_count }})</a
+        >
+      </nav>
     </header>
+
+    <div class="nav-overlay" id="navOverlay"></div>
 
     <!-- Hero / Brand Story -->
     <section class="hero-section">
-        <div class="hero-text">
-            <h2>Our Story</h2>
-            <p>
-                Founded in 4th Sep,2024, LR Fragrances is dedicated to bringing luxury scents to every individual.
-                With a passion for quality and elegance, we craft perfumes that leave lasting impressions.
-                Every bottle represents sophistication, confidence, and the art of fine fragrance.
-            </p>
-        </div>
-        <div class="hero-image">
-            <img src="{{ url_for('static', filename='images/products/hero-placeholder.jpg') }}" alt="LR Fragrances">
-        </div>
+      <div class="hero-text">
+        <h2>Our Story</h2>
+        <p>
+          Founded in 4th Sep,2024, LR Fragrances is dedicated to bringing luxury
+          scents to every individual. With a passion for quality and elegance,
+          we craft perfumes that leave lasting impressions. Every bottle
+          represents sophistication, confidence, and the art of fine fragrance.
+        </p>
+      </div>
+      <div class="hero-image">
+        <img
+          src="{{ url_for('static', filename='images/products/hero-placeholder.jpg') }}"
+          alt="LR Fragrances"
+        />
+      </div>
     </section>
 
     <!-- Founder / Team -->
     <section class="founder-section">
-        <h2>Meet Our Founder</h2>
-        <div class="founder-card">
-            <img src="{{ url_for('static', filename='images/products/founder-placeholder.jpeg') }}" alt="Founder">
-            <h3>Lattif Ur Rehman</h3>
-            <p>
-                <b>Lattif Ur Rehman</b> founded LR Fragrances with a vision to create unique, high-quality perfumes
-                for every occasion. With years of experience in the fragrance industry, Alex continues
-                to innovate and inspire the team to craft scents that captivate the senses.
-            </p>
-        </div>
+      <h2 class="animate-fade-in">Meet Our Founder</h2>
+      <div class="founder-card animate-card">
+        <img
+          src="{{ url_for('static', filename='images/products/founder-placeholder.jpeg') }}"
+          alt="Founder"
+          class="animate-image-zoom"
+        />
+        <h3 class="animate-fade-in">Lattif Ur Rehman</h3>
+        <p class="animate-fade-in-up">
+          <b>Lattif Ur Rehman</b> founded LR Fragrances with a vision to create
+          unique, high-quality perfumes for every occasion. With years of
+          experience in the fragrance industry, Alex continues to innovate and
+          inspire the team to craft scents that captivate the senses.
+        </p>
+      </div>
     </section>
+    <hr
+      style="
+        margin-top: 40px;
+        margin-bottom: 40px;
+        border: none;
+        border-top: 1px solid #757272;
+      "
+    />
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer animate-fade-in">
+      <div class="footer-container">
+        <div class="footer-section animate-fade-in-up stagger-item-1">
+          <h4>About LR Fragrances</h4>
+          <p>
+            Luxury fragrances for the discerning individual. Premium quality,
+            authentic products, delivered with care.
+          </p>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-2">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/shop" class="animate-link">Shop</a></li>
+            <li><a href="/about" class="animate-link">About Us</a></li>
+            <li><a href="/contact" class="animate-link">Contact</a></li>
+            <li><a href="/support" class="animate-link">Support</a></li>
+          </ul>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-3">
+          <h4>Policies</h4>
+          <ul>
+            <li>
+              <a href="{{ url_for('privacy_policy') }}" class="animate-link"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('terms') }}" class="animate-link"
+                >Terms & Conditons</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('shipping_policy') }}" class="animate-link"
+                >Shipping Info</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-4">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/share/16mTFkThmz/"
+              target="_blank"
+              aria-label="Facebook"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-facebook-f"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/lrperfumes5"
+              target="_blank"
+              aria-label="Instagram"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.tiktok.com/@lrperfumes5"
+              target="_blank"
+              aria-label="TikTok"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 LR Fragrances. All Rights Reserved.</p>
+      </div>
+    </footer>
 
-    <footer><footer class="footer">
-        <p>© 2025 LR Fragrances. All Rights Reserved.</p>
-    </footer></footer>
+    <!-- WHATSAPP BUTTON -->
+    <a
+      href="https://wa.me/message/S2X7CX7MZK75F1"
+      target="_blank"
+      class="whatsapp-btn animate-float"
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
-</body>
+    <!-- JS (FIXED) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.getElementById("hamburger");
+        const nav = document.getElementById("nav-menu");
+        const overlay = document.getElementById("navOverlay");
 
+        hamburger.addEventListener("click", () => {
+          hamburger.classList.toggle("active");
+          nav.classList.toggle("active");
+          overlay.classList.toggle("active");
+        });
+
+        overlay.addEventListener("click", closeMenu);
+
+        document.querySelectorAll("#nav-menu a").forEach((link) => {
+          link.addEventListener("click", closeMenu);
+        });
+
+        function closeMenu() {
+          hamburger.classList.remove("active");
+          nav.classList.remove("active");
+          overlay.classList.remove("active");
+        }
+      });
+    </script>
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+      // Initialize theme from localStorage
+      const themeToggle = document.getElementById("themeToggle");
+      const savedTheme = localStorage.getItem("theme") || "dark-theme";
+
+      document.body.classList.add(savedTheme);
+      updateThemeIcon();
+
+      // Toggle theme on button click
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.body.classList.contains("dark-theme");
+
+        if (isDark) {
+          document.body.classList.remove("dark-theme");
+          document.body.classList.add("light-theme");
+          localStorage.setItem("theme", "light-theme");
+        } else {
+          document.body.classList.remove("light-theme");
+          document.body.classList.add("dark-theme");
+          localStorage.setItem("theme", "dark-theme");
+        }
+        updateThemeIcon();
+      });
+
+      function updateThemeIcon() {
+        const isDark = document.body.classList.contains("dark-theme");
+        themeToggle.innerHTML = isDark
+          ? '<i class="fas fa-moon"></i>'
+          : '<i class="fas fa-sun"></i>';
+      }
+    </script>
+  </body>
 </html>

@@ -1,220 +1,428 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Customer Support | LR Fragrances</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- HEADER -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+
+    <!-- Animations CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animations.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
     <header class="navbar">
-        <div class="logo">
-            <img src="{{ url_for('static', filename='images/products/monogram.jpeg') }}" alt="LR Logo" class="logo-img">
-            <h1>LR Fragrances</h1>
-        </div>
-    
-        <nav>
-            <a href="/">Home</a>
-            <a href="/shop">Shop</a>
-            <a href="/cart"><i class="fa-solid fa-cart-shopping"></i>({{ cart_count }})</a>
-        </nav>
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/products/monogram.jpeg') }}"
+          class="logo-img"
+        />
+        <h1>LR Fragrances</h1>
+      </div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav-menu">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+        <a href="/shop">Shop</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+        <a href="/cart"
+          ><i class="fa-solid fa-cart-shopping"></i> ({{ cart_count }})</a
+        >
+      </nav>
     </header>
 
+    <div class="nav-overlay" id="navOverlay"></div>
+
     <style>
-        body {
-            background: #111;
-            color: #fff;
-        }
+      .support-container {
+        max-width: 1100px;
+        margin: auto;
+        padding: 50px 20px;
+      }
 
-        .support-container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 50px 20px;
-        }
+      .support-title {
+        text-align: center;
+        font-size: 36px;
+        color: #d7a719;
+        margin-bottom: 40px;
+      }
 
-        .support-title {
-            text-align: center;
-            font-size: 36px;
-            color:  #d7a719;
-            margin-bottom: 40px;
-        }
+      .support-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+      }
 
-        .support-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
+      .support-card {
+        background: #1a1a1a;
+        border-radius: 14px;
+        padding: 25px;
+        border: 1px solid #333;
+        transition: all 0.3s ease;
+      }
 
-        .support-card {
-            background: #1a1a1a;
-            border-radius: 14px;
-            padding: 25px;
-            border: 1px solid #333;
-            transition: all 0.3s ease;
-        }
+      .support-card:hover {
+        transform: translateY(-5px);
+        border-color: #d7a719;
+      }
 
-        .support-card:hover {
-            transform: translateY(-5px);
-            border-color: #d7a719;
-        }
+      .support-card i {
+        font-size: 32px;
+        color: #d7a719;
+        margin-bottom: 15px;
+      }
 
-        .support-card i {
-            font-size: 32px;
-            color: #d7a719;
-            margin-bottom: 15px;
-        }
+      .support-card h3 {
+        margin-bottom: 12px;
+      }
 
-        .support-card h3 {
-            margin-bottom: 12px;
-        }
+      .support-card p {
+        font-size: 14px;
+        color: #ccc;
+        line-height: 1.6;
+      }
 
-        .support-card p {
-            font-size: 14px;
-            color: #ccc;
-            line-height: 1.6;
-        }
+      .support-card a {
+        display: inline-block;
+        margin-top: 12px;
+        color: #d7a719;
+        text-decoration: none;
+        font-weight: 500;
+      }
 
-        .support-card a {
-            display: inline-block;
-            margin-top: 12px;
-            color: #d7a719;
-            text-decoration: none;
-            font-weight: 500;
-        }
+      /* Forms */
+      .support-form {
+        margin-top: 15px;
+      }
 
-        /* Forms */
-        .support-form {
-            margin-top: 15px;
-        }
+      .support-form input,
+      .support-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 12px;
+        background: #111;
+        border: 1px solid #444;
+        color: #fff;
+        border-radius: 6px;
+      }
 
-        .support-form input,
-        .support-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
-            background: #111;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 6px;
-        }
+      .support-form button {
+        background: #d7a719;
+        color: #111;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+      }
 
-        .support-form button {
-            background: #d7a719;
-            color: #111;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+      .support-form button:hover {
+        opacity: 0.9;
+      }
 
-        .support-form button:hover {
-            opacity: 0.9;
-        }
-        /* Accordion */
-        .accordion-btn {
-            width: 100%;
-            background: #1a1a1a;
-            color: #d7a719;
-            padding: 14px;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-            margin-bottom: 5px;
-        }
+      /* Accordion */
+      .accordion-btn {
+        width: 100%;
+        background: #1a1a1a;
+        color: #d7a719;
+        padding: 14px;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+        margin-bottom: 5px;
+      }
 
-.accordion-content {
-    display: none;
-    padding: 15px;
-    background: #111;
-}
+      .accordion-content {
+        display: none;
+        padding: 15px;
+        background: #111;
+      }
+      /* ===== TOAST MESSAGE ===== */
+      .toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        min-width: 280px;
+        padding: 15px 20px;
+        background: #111;
+        color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        font-size: 15px;
+        z-index: 9999;
+        opacity: 0;
+        transform: translateY(-20px);
+        animation:
+          slideIn 0.4s forwards,
+          fadeOut 0.4s 3.6s forwards;
+      }
+      body.light-theme support-card a{
+        color: #afdc1b;
+      }
 
+      .toast.success {
+        border-left: 5px solid #d7a719;
+      }
+
+      .toast.error {
+        border-left: 5px solid #e74c3c;
+      }
+
+      @keyframes slideIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeOut {
+        to {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %}
+    <div class="toast {{ category }}">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %}
 
     <section class="support-container">
+      <h1 class="support-title">Customer Support</h1>
 
-        <h1 class="support-title">Customer Support</h1>
+      <div class="support-grid">
+        <!-- Return Form -->
+        <div class="support-card">
+          <i class="fa-solid fa-rotate-left"></i>
+          <h3>Return Request</h3>
+          <p>
+            Submit a return request within 7 days of delivery. Items must be
+            unused and sealed.
+          </p>
 
-        <div class="support-grid">
-
-            <!-- Return Form -->
-            <div class="support-card">
-                <i class="fa-solid fa-rotate-left"></i>
-                <h3>Return Request</h3>
-                <p>Submit a return request within 7 days of delivery. Items must be unused and sealed.</p>
-
-                <form method="POST" action="/submit-return" class="support-form">
-                    <input type="text" name="order_id" placeholder="Order ID" required>
-                    <input type="email" name="email" placeholder="Email" required>
-                    <textarea name="reason" placeholder="Reason"></textarea>
-                    <button type="submit">Submit Return</button>
-                </form>
-
-            </div>
-
-            <!-- Track Order -->
-            <div class="support-card">
-                <i class="fa-solid fa-truck-fast"></i>
-                <h3>Track Your Order</h3>
-                <p>Track the status of your order using your Order ID.</p>
-
-                <form class="support-form">
-                    <input type="text" placeholder="Enter Order ID" required>
-                    <button type="submit">Track Order</button>
-                </form>
-            </div>
-
-            <!-- Shipping Policy -->
-            <div class="support-card">
-                <i class="fa-solid fa-box"></i>
-                <h3>Shipping Policy</h3>
-                <p>
-                    Orders are delivered within 3–5 working days across Pakistan.
-                    Cash on Delivery is available nationwide.
-                </p>
-                <a href="#">Read Full Policy</a>
-            </div>  
-
-            <!-- Privacy Policy -->
-            <div class="support-card">
-                <i class="fa-solid fa-user-shield"></i>
-                <h3>Privacy Policy</h3>
-                <p>
-                    Your personal data is secure with us. We never share customer information with third parties.
-                </p>
-                <a href="#">Read Privacy Policy</a>
-            </div>
-
-            <!-- Terms of Service -->
-            <div class="support-card">
-                <i class="fa-solid fa-file-contract"></i>
-                <h3>Terms of Service</h3>
-                <p>
-                    By using our website, you agree to our terms, conditions, and policies.
-                </p>
-                <a href="#">Read Terms</a>
-            </div>
-
-            <!-- Contact Support -->
-            <div class="support-card">
-                <i class="fa-solid fa-headset"></i>
-                <h3>Need Help?</h3>
-                <p>
-                    Our support team is available via WhatsApp and Email to assist you.
-                </p>
-                <a href="https://wa.me/message/S2X7CX7MZK75F1" target="_blank">Chat on WhatsApp</a>
-            </div>
-
+          <form method="POST" action="/submit-return" class="support-form">
+            <input
+              type="text"
+              name="order_id"
+              placeholder="Order ID"
+              required
+            />
+            <input type="email" name="email" placeholder="Email" required />
+            <textarea name="reason" placeholder="Reason"></textarea>
+            <button type="submit">Submit Return</button>
+          </form>
         </div>
 
+        <!-- Track Order -->
+        <div class="support-card">
+          <i class="fa-solid fa-truck-fast"></i>
+          <h3>Track Your Order</h3>
+          <p>Track the status of your order using your Order ID.</p>
+
+          <form class="support-form">
+            <a href="{{ url_for('track_order_page') }}" class="btn-secondary">
+              Track Order
+            </a>
+          </form>
+        </div>
+
+        <!-- Shipping Policy -->
+        <div class="support-card">
+          <i class="fa-solid fa-box"></i>
+          <h3>Shipping Policy</h3>
+          <p>
+            Orders are delivered within 3–5 working days across Pakistan. Cash
+            on Delivery is available nationwide.
+          </p>
+          <a href="{{ url_for('shipping_policy') }}">Read Full Policy</a>
+        </div>
+
+        <!-- Privacy Policy -->
+        <div class="support-card">
+          <i class="fa-solid fa-user-shield"></i>
+          <h3>Privacy Policy</h3>
+          <p>
+            Your personal data is secure with us. We never share customer
+            information with third parties.
+          </p>
+          <a href="{{ url_for('privacy_policy') }}">Read Privacy Policy</a>
+        </div>
+
+        <!-- Terms of Service -->
+        <div class="support-card">
+          <i class="fa-solid fa-file-contract"></i>
+          <h3>Terms of Service</h3>
+          <p>
+            By using our website, you agree to our terms, conditions, and
+            policies.
+          </p>
+          <a href="{{ url_for('terms') }}">Read Terms</a>
+        </div>
+
+        <!-- Contact Support -->
+        <div class="support-card">
+          <i class="fa-solid fa-headset"></i>
+          <h3>Need Help?</h3>
+          <p>
+            Our support team is available via WhatsApp and Email to assist you.
+          </p>
+          <a href="https://wa.me/message/S2X7CX7MZK75F1" target="_blank"
+            >Chat on WhatsApp</a
+          >
+        </div>
+      </div>
     </section>
+    <hr
+      style="
+        margin-top: 40px;
+        margin-bottom: 40px;
+        border: none;
+        border-top: 1px solid #757272;
+      "
+    />
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h4>About LR Fragrances</h4>
+          <p>
+            Luxury fragrances for the discerning individual. Premium quality,
+            authentic products, delivered with care.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/shop">Shop</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/support">Support</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Policies</h4>
+          <ul>
+            <li>
+              <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
+            </li>
+            <li><a href="{{ url_for('terms') }}">Terms & Conditons</a></li>
+            <li>
+              <a href="{{ url_for('shipping_policy') }}">Shipping Info</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/share/16mTFkThmz/"
+              target="_blank"
+              aria-label="Facebook"
+              ><i class="fa-brands fa-facebook-f"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/lrperfumes5"
+              target="_blank"
+              aria-label="Instagram"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.tiktok.com/@lrperfumes5"
+              target="_blank"
+              aria-label="TikTok"
+              ><i class="fa-brands fa-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 LR Fragrances. All Rights Reserved.</p>
+      </div>
+    </footer>
+    <!-- JS (FIXED) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.getElementById("hamburger");
+        const nav = document.getElementById("nav-menu");
+        const overlay = document.getElementById("navOverlay");
 
-</body>
+        hamburger.addEventListener("click", () => {
+          hamburger.classList.toggle("active");
+          nav.classList.toggle("active");
+          overlay.classList.toggle("active");
+        });
 
+        overlay.addEventListener("click", closeMenu);
+
+        document.querySelectorAll("#nav-menu a").forEach((link) => {
+          link.addEventListener("click", closeMenu);
+        });
+
+        function closeMenu() {
+          hamburger.classList.remove("active");
+          nav.classList.remove("active");
+          overlay.classList.remove("active");
+        }
+      });
+    </script>
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+      // Initialize theme from localStorage
+      const themeToggle = document.getElementById("themeToggle");
+      const savedTheme = localStorage.getItem("theme") || "dark-theme";
+
+      document.body.classList.add(savedTheme);
+      updateThemeIcon();
+
+      // Toggle theme on button click
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.body.classList.contains("dark-theme");
+
+        if (isDark) {
+          document.body.classList.remove("dark-theme");
+          document.body.classList.add("light-theme");
+          localStorage.setItem("theme", "light-theme");
+        } else {
+          document.body.classList.remove("light-theme");
+          document.body.classList.add("dark-theme");
+          localStorage.setItem("theme", "dark-theme");
+        }
+        updateThemeIcon();
+      });
+
+      function updateThemeIcon() {
+        const isDark = document.body.classList.contains("dark-theme");
+        themeToggle.innerHTML = isDark
+          ? '<i class="fas fa-moon"></i>'
+          : '<i class="fas fa-sun"></i>';
+      }
+    </script>
+  </body>
 </html>

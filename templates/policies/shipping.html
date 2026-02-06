@@ -3,43 +3,418 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shipping Policy | LR Fragrances</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Animations CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}" />
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Luxury Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ================= LUXURY SHIPPING POLICY ================= */
+
+        body {
+            background: radial-gradient(circle at top, #151515, #000);
+        }
+
+        .policy-page {
+            max-width: 940px;
+            margin: 90px auto;
+            padding: 70px 55px;
+            background: linear-gradient(180deg, #111, #0b0b0b);
+            border-radius: 20px;
+            border: 1px solid rgba(215, 167, 25, 0.3);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+            animation: fadeLuxury 0.9s ease forwards;
+        }
+
+        .policy-page h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 46px;
+            text-align: center;
+            color: #d7a719;
+            letter-spacing: 1.2px;
+            margin-bottom: 14px;
+        }
+
+        .policy-subtitle {
+            text-align: center;
+            color: #bbb;
+            font-size: 16px;
+            margin-bottom: 45px;
+            letter-spacing: 0.3px;
+        }
+
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #d7a719, transparent);
+            margin: 45px 0;
+        }
+
+        /* ================= POLICY CARDS ================= */
+
+        .policy-card {
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(215, 167, 25, 0.25);
+            border-radius: 16px;
+            padding: 32px 34px;
+            margin-bottom: 28px;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 45px rgba(215, 167, 25, 0.3);
+        }
+
+        .policy-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: #f3cc5c;
+            margin-bottom: 12px;
+            letter-spacing: 0.6px;
+        }
+
+        .policy-card p,
+        .policy-card li {
+            font-size: 16.5px;
+            line-height: 1.9;
+            color: #d8d8d8;
+        }
+
+        .policy-card ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .policy-card li {
+            margin-bottom: 8px;
+        }
+
+        /* ================= LIGHT THEME OVERRIDES FOR SHIPPING POLICY ================= */
+        body.light-theme .policy-page {
+            background: linear-gradient(180deg, #ffffff, #faf8f4) !important;
+            border: 1px solid #e8dcc8 !important;
+            box-shadow: 0 8px 24px rgba(201, 146, 42, 0.08) !important;
+        }
+
+        body.light-theme .policy-page h1 {
+            color: #2c2c2c !important;
+        }
+
+        body.light-theme .policy-subtitle {
+            color: #5a5a5a !important;
+        }
+
+        body.light-theme .gold-divider {
+            background: linear-gradient(to right, transparent, #c9922a, transparent) !important;
+        }
+
+        body.light-theme .policy-card {
+            background: rgba(201, 146, 42, 0.03) !important;
+            border: 1px solid #e8dcc8 !important;
+        }
+
+        body.light-theme .policy-card:hover {
+            box-shadow: 0 12px 30px rgba(201, 146, 42, 0.12) !important;
+        }
+
+        body.light-theme .policy-card h2 {
+            color: #c9922a !important;
+        }
+
+        body.light-theme .policy-card p,
+        body.light-theme .policy-card li {
+            color: #5a5a5a !important;
+        }
+
+        body.light-theme .policy-footer {
+            color: #8b8b8b !important;
+        }
+
+        /* ================= FOOTER NOTE ================= */
+
+        .policy-footer {
+            margin-top: 55px;
+            text-align: center;
+            font-size: 15px;
+            color: #aaa;
+            font-style: italic;
+        }
+      /* ================= FONT AWESOME ICON FIX ================= */
+      i, .fa, .fas, .fab, .far {
+        opacity: 1 !important;
+        display: inline !important;
+      }
+      .theme-toggle i, .whatsapp-btn i, .social-icons i {
+        opacity: 1 !important;
+        display: inline !important;
+        font-size: inherit !important;
+      }
+      body.light-theme i, body.light-theme .fa, body.light-theme .fas, body.light-theme .fab, body.light-theme .far {
+        opacity: 1 !important;
+        display: inline !important;
+      }
+      body.light-theme .theme-toggle i {
+        color: #ffffff !important;
+        opacity: 1 !important;
+      }
+      body.light-theme .whatsapp-btn i {
+        color: #ffffff !important;
+        opacity: 1 !important;
+      }
+        /* ================= ANIMATION ================= */
+
+        @keyframes fadeLuxury {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================= MOBILE RESPONSIVE ================= */
+
+        @media (max-width: 768px) {
+            .policy-page {
+                margin: 40px 16px;
+                padding: 45px 22px;
+            }
+
+            .policy-page h1 {
+                font-size: 32px;
+            }
+
+            .policy-card h2 {
+                font-size: 20px;
+            }
+
+            .policy-card p,
+            .policy-card li {
+                font-size: 15px;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <body>
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/products/monogram.jpeg') }}" class="logo-img">
+            <h1>LR Fragrances</h1>
+        </div>
+
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav id="nav-menu" >
+            <a href="/">Home</a>
+            <a href="/admin">Admin</a>
+            <a href="/shop">Shop</a>
+            <a href="/contact">Contact</a>
+            <a href="/about">About</a>
+            <a href="/cart"><i class="fa-solid fa-cart-shopping"></i> ({{ cart_count }})</a>
+        </nav>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay"></div>
 
     <section class="policy-page">
+
         <h1>Shipping Policy</h1>
-
-        <h2>Delivery Areas</h2>
-        <p>
-            We deliver all across Pakistan using trusted courier partners.
+        <p class="policy-subtitle">
+            Carefully crafted delivery standards for a premium fragrance experience
         </p>
 
-        <h2>Delivery Time</h2>
-        <ul>
-            <li>Major cities: 2–4 working days</li>
-            <li>Other areas: 3–5 working days</li>
-        </ul>
+        <div class="gold-divider"></div>
 
-        <h2>Shipping Charges</h2>
-        <p>
-            Shipping charges are calculated at checkout.
-            Free shipping may apply on selected promotions.
-        </p>
+        <div class="policy-card">
+            <h2>Delivery Coverage</h2>
+            <p>
+                LR Fragrances proudly delivers across <strong>Pakistan</strong>.
+                We partner with trusted national courier services to ensure
+                safe, secure, and timely delivery of every order.
+            </p>
+        </div>
 
-        <h2>Order Tracking</h2>
-        <p>
-            Once your order is dispatched, you can track it using the
-            <strong>Track Order</strong> feature on our website.
-        </p>
+        <div class="policy-card">
+            <h2>Order Processing Time</h2>
+            <p>
+                All orders are processed within <strong>24–48 hours</strong> after
+                confirmation. Orders placed on weekends or public holidays
+                are processed on the next working day.
+            </p>
+        </div>
+
+        <div class="policy-card">
+            <h2>Estimated Delivery Timeline</h2>
+            <ul>
+                <li><strong>Major Cities:</strong> 2–4 business days</li>
+                <li><strong>Other Regions:</strong> 3–5 business days</li>
+            </ul>
+            <p>
+                Delivery timelines may vary due to weather conditions,
+                courier delays, or unforeseen logistical factors.
+            </p>
+        </div>
+
+        <div class="policy-card">
+            <h2>Shipping Charges</h2>
+            <p>
+                Shipping charges are calculated at checkout based on your
+                delivery location. Promotional campaigns may include
+                <strong>free shipping</strong> for eligible orders.
+            </p>
+        </div>
+
+        <div class="policy-card">
+            <h2>Order Tracking</h2>
+            <p>
+                Once your order is dispatched, tracking details will be
+                shared via email or SMS. You may also track your shipment
+                using the <strong>Track Order</strong> option on our website.
+            </p>
+        </div>
+
+        <div class="policy-card">
+            <h2>Delivery Assurance</h2>
+            <p>
+                Every LR Fragrances order is carefully packaged to preserve
+                product quality. In case of delivery issues, our support team
+                is always ready to assist you.
+            </p>
+        </div>
 
         <p class="policy-footer">
-            LR Fragrances ensures safe and timely delivery of every order.
+            LR Fragrances — delivering luxury, elegance, and confidence to your doorstep.
         </p>
+   
+
     </section>
+     <hr style="margin-top: 40px; margin-bottom: 40px; border: none; border-top: 1px solid #757272;" >
+
+      <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About LR Fragrances</h4>
+                <p>Luxury fragrances for the discerning individual. Premium quality, authentic products, delivered with care.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/shop">Shop</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/support">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Policies</h4>
+                <ul>
+                    <li><a href="{{ url_for('privacy_policy') }}">Privacy Policy</a></li>
+                    <li><a href="{{ url_for('terms') }}">Terms & Conditons</a></li>
+                    <li><a href="{{ url_for('shipping_policy') }}">Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/share/16mTFkThmz/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/lrperfumes5" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@lrperfumes5" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 LR Fragrances. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JS (FIXED) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const hamburger = document.getElementById("hamburger");
+            const nav = document.getElementById("nav-menu");
+            const overlay = document.getElementById("navOverlay");
+
+            hamburger.addEventListener("click", () => {
+                hamburger.classList.toggle("active");
+                nav.classList.toggle("active");
+                overlay.classList.toggle("active");
+            });
+
+            overlay.addEventListener("click", closeMenu);
+
+            document.querySelectorAll("#nav-menu a").forEach(link => {
+                link.addEventListener("click", closeMenu);
+            });
+
+            function closeMenu() {
+                hamburger.classList.remove("active");
+                nav.classList.remove("active");
+                overlay.classList.remove("active");
+            }
+
+        });
+    </script>
+
+    <!-- WHATSAPP BUTTON -->
+    <a href="https://wa.me/message/S2X7CX7MZK75F1" target="_blank" class="whatsapp-btn animate-float">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        // Initialize theme from localStorage
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'dark-theme';
+        
+        document.body.classList.add(savedTheme);
+        updateThemeIcon();
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.body.classList.contains('dark-theme');
+            
+            if (isDark) {
+                document.body.classList.remove('dark-theme');
+                document.body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light-theme');
+            } else {
+                document.body.classList.remove('light-theme');
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark-theme');
+            }
+            updateThemeIcon();
+        });
+
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-theme');
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        }
+    </script>
+
 
 </body>
-
 </html>

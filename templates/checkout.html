@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Checkout | LR Fragrances</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Existing CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    
+    <!-- Animations CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}" />
+
+    <!-- Checkout Styles -->
+    <style>
+      /* CHECKOUT CONTAINER */
+      .checkout-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 40px;
+      }
+
+      /* ORDER SUMMARY */
+      .order-summary {
+        background: linear-gradient(145deg, #151515, #0f0f0f);
+        border-radius: 18px;
+        padding: 30px;
+        border: 1px solid rgba(215, 167, 25, 0.25);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+      }
+
+      .order-summary h2 {
+        font-family: "Playfair Display", serif;
+        color: #d7a719;
+        margin-bottom: 20px;
+        font-size: 24px;
+      }
+
+      .order-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .order-item:last-child {
+        border-bottom: none;
+      }
+
+      .order-item img {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        object-fit: cover;
+      }
+
+      .order-item-details h4 {
+        margin: 0 0 5px 0;
+        color: #fff;
+        font-size: 16px;
+      }
+
+      .order-item-details p {
+        margin: 0;
+        color: #ccc;
+        font-size: 14px;
+      }
+
+      .order-total {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(215, 167, 25, 0.3);
+        text-align: right;
+      }
+
+      .order-total h3 {
+        color: #d7a719;
+        font-size: 20px;
+        margin: 0;
+      }
+
+      /* CHECKOUT FORM */
+      .checkout-form {
+        background: linear-gradient(145deg, #151515, #0f0f0f);
+        border-radius: 18px;
+        padding: 30px;
+        border: 1px solid rgba(215, 167, 25, 0.25);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+      }
+
+      .checkout-form h2 {
+        font-family: "Playfair Display", serif;
+        color: #d7a719;
+        margin-bottom: 20px;
+        font-size: 24px;
+      }
+
+      .form-section {
+        margin-bottom: 30px;
+      }
+
+      .form-section h3 {
+        color: #fff;
+        margin-bottom: 15px;
+        font-size: 18px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #ebdcdc;
+        font-size: 14px;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 8px;
+        background: #1b1b1b;
+        border: 1px solid #333;
+        color: #fff;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #d7a719;
+        box-shadow: 0 0 0 2px rgba(215, 167, 25, 0.2);
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      /* PAYMENT SECTION */
+      .payment-section {
+        background: rgba(215, 167, 25, 0.05);
+        border: 1px solid rgba(215, 167, 25, 0.2);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .payment-method {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .payment-method input[type="radio"] {
+        width: auto;
+        margin: 0;
+      }
+
+      .payment-method label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        color: #fff;
+      }
+      .payment-logo {
+        width: 40px;
+        border-radius: 6px;
+        height: auto;
+      }
+
+      .payment-details {
+        display: none;
+      }
+
+      .payment-details.active {
+        display: block;
+      }
+
+      /* BUTTONS */
+      .btn-primary {
+        background: linear-gradient(135deg, #d7a719, #b58b14);
+        color: #000;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        font-size: 16px;
+      }
+
+      .btn-primary:hover {
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(215, 167, 25, 0.4);
+      }
+
+      .btn-primary:disabled {
+        background: #666;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .checkout-container {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .navbar {
+          flex-direction: column;
+          gap: 10px;
+          padding: 15px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ================= LIGHT THEME OVERRIDES FOR CHECKOUT PAGE ================= */
+      body.light-theme .checkout-container {
+        background: linear-gradient(135deg, #fefdfb 0%, #f5ede5 100%);
+      }
+
+      body.light-theme .order-summary {
+        background: #ffffff !important;
+        border: 1px solid #e8dcc8 !important;
+        box-shadow: 0 8px 24px rgba(201, 146, 42, 0.06) !important;
+      }
+
+      body.light-theme .order-summary h2 {
+        color: #2c2c2c !important;
+      }
+
+      body.light-theme .order-item {
+        border-bottom: 1px solid #e8dcc8 !important;
+      }
+
+      body.light-theme .order-item-details h4 {
+        color: #2c2c2c !important;
+      }
+
+      body.light-theme .order-item-details p {
+        color: #5a5a5a !important;
+      }
+
+      body.light-theme .order-item-price {
+        color: #2c2c2c !important;
+      }
+
+      body.light-theme .order-total {
+        border-top: 1px solid #e8dcc8 !important;
+      }
+
+      body.light-theme .order-total h3 {
+        color: #c9922a !important;
+      }
+
+      body.light-theme .checkout-form {
+        background: #ffffff !important;
+        border: 1px solid #e8dcc8 !important;
+        box-shadow: 0 8px 24px rgba(201, 146, 42, 0.06) !important;
+      }
+
+      body.light-theme .checkout-form h2 {
+        color: #2c2c2c !important;
+      }
+
+      body.light-theme .form-section h3 {
+        color: #2c2c2c !important;
+      }
+
+      body.light-theme .form-group label {
+        color: #5a5a5a !important;
+      }
+
+      body.light-theme .form-group input,
+      body.light-theme .form-group select,
+      body.light-theme .form-group textarea {
+        background: #faf8f4 !important;
+        color: #2c2c2c !important;
+        border: 1px solid #e0d4c4 !important;
+      }
+
+      body.light-theme .form-group input:focus,
+      body.light-theme .form-group select:focus,
+      body.light-theme .form-group textarea:focus {
+        border-color: #c9922a !important;
+        box-shadow: 0 0 0 2px rgba(201, 146, 42, 0.1) !important;
+      }
+
+      body.light-theme .payment-section {
+        background: rgba(201, 146, 42, 0.04) !important;
+        border: 1px solid rgba(201, 146, 42, 0.12) !important;
+      }
+
+      body.light-theme .payment-method label {
+        color: #2c2c2c !important;
+      }
+
+      body.light-theme .btn-primary {
+        background: linear-gradient(135deg, #c9922a, #a8751f) !important;
+        color: #ffffff !important;
+      }
+
+      body.light-theme .btn-primary:hover {
+        color: #ffffff !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="navbar">
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/products/monogram.jpeg') }}"
+          class="logo-img"
+        />
+        <h1>LR Fragrances</h1>
+      </div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav-menu">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+        <a href="/shop">Shop</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+        <a href="/cart"
+          ><i class="fa-solid fa-cart-shopping"></i> ({{ cart_count }})</a
+        >
+      </nav>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+    <div class="checkout-container animate-fade-in-up">
+      <!-- ORDER SUMMARY -->
+      <div class="order-summary animate-slide-in-left">
+        <h2 class="animate-fade-in">Order Summary</h2>
+
+        {% for item in items %}
+        <div class="order-item animate-fade-in-up">
+          <img
+            src="{{ url_for('static', filename='images/products/' ~ item.product.image) }}"
+            alt="{{ item.product.name }}"
+            class="animate-image-zoom"
+          />
+          <div class="order-item-details">
+            <h4>{{ item.product.name }}</h4>
+            {% if item.product.discount > 0 %}
+            <p>Original Price: <span style="text-decoration: line-through; color: #999;">PKR {{ item.product.price }}</span></p>
+            <p>Discount: <span style="color: #d7a719; font-weight: bold;">{{ item.product.discount }}% OFF</span></p>
+            <p>Price per Item: <strong>PKR {{ item.product.price - (item.product.price * item.product.discount // 100) }}</strong></p>
+            <p>Quantity: {{ item.qty }}</p>
+            {% else %}
+            <p>Quantity: {{ item.qty }} × PKR {{ item.product.price }}</p>
+            {% endif %}
+          </div>
+          <div class="order-item-price">
+            <strong class="animate-price-badge">PKR {{ item.subtotal }}</strong>
+          </div>
+        </div>
+        {% endfor %}
+
+        <div class="order-total">
+          <h3 class="animate-price-badge">Total: PKR {{ total }}</h3>
+        </div>
+      </div>
+
+      <!-- CHECKOUT FORM -->
+      <div class="checkout-form animate-slide-in-right">
+        <h2 class="animate-fade-in">Checkout</h2>
+
+        <form id="checkoutForm" action="/process-payment" method="POST">
+          <!-- BILLING INFORMATION -->
+          <div class="form-section animate-form-section">
+            <h3><i class="fas fa-user"></i> Billing Information</h3>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first_name">First Name *</label>
+                <input type="text" id="first_name" name="first_name" required class="animate-input" />
+              </div>
+              <div class="form-group">
+                <label for="last_name">Last Name *</label>
+                <input type="text" id="last_name" name="last_name" required class="animate-input" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required class="animate-input" />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone" required class="animate-input" />
+            </div>
+          </div>
+
+          <!-- SHIPPING ADDRESS -->
+          <div class="form-section animate-form-section">
+            <h3><i class="fas fa-truck"></i> Shipping Address</h3>
+
+            <div class="form-group">
+              <label for="address">Street Address *</label>
+              <input type="text" id="address" name="address" required />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">City *</label>
+                <input type="text" id="city" name="city" required />
+              </div>
+              <div class="form-group">
+                <label for="postal_code">Postal Code</label>
+                <input type="text" id="postal_code" name="postal_code" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="country">Country *</label>
+              <select id="country" name="country" required>
+                <option value="Pakistan">Pakistan</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- PAYMENT METHOD -->
+          <div class="form-section">
+            <h3><i class="fas fa-credit-card"></i> Payment Method</h3>
+
+            <div class="payment-section">
+              <!-- JazzCash -->
+              <div class="payment-method">
+                <input
+                  type="radio"
+                  id="jazzcash"
+                  name="payment_method"
+                  value="jazzcash"
+                />
+                <label for="jazzcash">
+                  <div class="jazzcash-logo">
+                    <img
+                      src="{{ url_for('static', filename='images/products/jazzcash.PNG') }}"
+                      class="payment-logo"
+                    />
+                  </div>
+                  <span>JazzCash</span>
+                </label>
+              </div>
+              <!-- EasyPaisa -->
+              <div class="payment-method">
+                <input
+                  type="radio"
+                  id="easypaisa"
+                  name="payment_method"
+                  value="easypaisa"
+                />
+                <label for="easypaisa">
+                  <div class="jazzcash-logo">
+                    <img
+                      src="{{ url_for('static', filename='images/products/easypaisa.JPG') }}"
+                      class="payment-logo"
+                    />
+                  </div>
+                  <span>EasyPaisa</span>
+                </label>
+              </div>
+
+              <!-- Cash on Delivery -->
+              <div class="payment-method">
+                <input
+                  type="radio"
+                  id="cod"
+                  name="payment_method"
+                  value="cod"
+                  checked
+                />
+                <label for="cod">
+                  <div class="cod-logo">
+                    <img
+                      src="{{ url_for('static', filename='images/products/delivery.jpeg') }}"
+                      class="payment-logo"
+                    />
+                  </div>
+                  <span>Pay when you receive your order</span>
+                </label>
+              </div>
+
+              <!-- JazzCash details -->
+              <div id="jazzcash-details" class="payment-details">
+                <div class="form-group">
+                  <label for="jazzcash_number">JazzCash Mobile Number *</label>
+                  <input
+                    type="tel"
+                    id="jazzcash_number"
+                    name="jazzcash_number"
+                    placeholder="03XXXXXXXXX"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="jazzcash_cnic">CNIC (Last 6 digits) *</label>
+                  <input
+                    type="text"
+                    id="jazzcash_cnic"
+                    name="jazzcash_cnic"
+                    placeholder="XXXXXX"
+                    maxlength="6"
+                    required
+                  />
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PLACE ORDER BUTTON -->
+          <button type="submit" class="btn-primary" id="placeOrderBtn">
+            <i class="fas fa-lock"></i>
+            Place Order - PKR {{ total }}
+          </button>
+        </form>
+      </div>
+    </div>
+   <hr style="margin-top: 40px; margin-bottom: 40px; border: none; border-top: 1px solid #757272;" >
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About LR Fragrances</h4>
+                <p>Luxury fragrances for the discerning individual. Premium quality, authentic products, delivered with care.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/shop">Shop</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/support">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Policies</h4>
+                <ul>
+                    <li><a href="{{ url_for('privacy_policy') }}">Privacy Policy</a></li>
+                    <li><a href="{{ url_for('terms') }}">Terms & Conditons</a></li>
+                    <li><a href="{{ url_for('shipping_policy') }}">Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/share/16mTFkThmz/" target="_blank" aria-label="Facebook" class="animate-social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/lrperfumes5" target="_blank" aria-label="Instagram" class="animate-social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@lrperfumes5" target="_blank" aria-label="TikTok" class="animate-social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 LR Fragrances. All Rights Reserved.</p>
+        </div>
+    </footer>
+  
+     <!-- WHATSAPP BUTTON -->
+    <a href="https://wa.me/message/S2X7CX7MZK75F1" target="_blank" class="whatsapp-btn animate-float">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <i class="fas fa-moon"></i>
+        </button>
+    <script>
+      // Payment method toggle
+      document
+        .querySelectorAll('input[name="payment_method"]')
+        .forEach((radio) => {
+          radio.addEventListener("change", function () {
+            document.querySelectorAll(".payment-details").forEach((detail) => {
+              detail.classList.remove("active");
+            });
+
+            // Handle required attributes for JazzCash fields
+            const jazzcashNumber = document.getElementById("jazzcash_number");
+            const jazzcashCnic = document.getElementById("jazzcash_cnic");
+
+            if (this.value === "jazzcash") {
+              document
+                .getElementById("jazzcash-details")
+                .classList.add("active");
+              jazzcashNumber.required = true;
+              jazzcashCnic.required = true;
+            } else {
+              jazzcashNumber.required = false;
+              jazzcashCnic.required = false;
+            }
+          });
+        });
+
+      // Form validation
+      document
+        .getElementById("checkoutForm")
+        .addEventListener("submit", function (e) {
+          const btn = document.getElementById("placeOrderBtn");
+          btn.disabled = true;
+          btn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        });
+    </script>
+    <!-- JS (FIXED) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.getElementById("hamburger");
+        const nav = document.getElementById("nav-menu");
+        const overlay = document.getElementById("navOverlay");
+
+        hamburger.addEventListener("click", () => {
+          hamburger.classList.toggle("active");
+          nav.classList.toggle("active");
+          overlay.classList.toggle("active");
+        });
+
+        overlay.addEventListener("click", closeMenu);
+
+        document.querySelectorAll("#nav-menu a").forEach((link) => {
+          link.addEventListener("click", closeMenu);
+        });
+
+        function closeMenu() {
+          hamburger.classList.remove("active");
+          nav.classList.remove("active");
+          overlay.classList.remove("active");
+        }
+      });
+    </script>
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        // Initialize theme from localStorage
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'dark-theme';
+        
+        document.body.classList.add(savedTheme);
+        updateThemeIcon();
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.body.classList.contains('dark-theme');
+            
+            if (isDark) {
+                document.body.classList.remove('dark-theme');
+                document.body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light-theme');
+            } else {
+                document.body.classList.remove('light-theme');
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark-theme');
+            }
+            updateThemeIcon();
+        });
+
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-theme');
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        }
+    </script>
+
+  </body>
+</html>

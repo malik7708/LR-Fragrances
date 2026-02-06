@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Login | LR Fragrances</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Main CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+
+    <!-- Animations CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animations.css') }}"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <style>
+      .login-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 80px);
+        padding: 20px;
+      }
+
+      .login-card {
+        background: #111;
+        border-radius: 18px;
+        padding: 40px 35px;
+        max-width: 420px;
+        width: 100%;
+        border: 1px solid rgba(215, 167, 25, 0.35);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        animation: fadeIn 0.6s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .login-title {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .login-title h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 30px;
+        color: #d7a719;
+        margin-bottom: 8px;
+      }
+
+      .login-title p {
+        font-size: 14px;
+        color: #bbb;
+      }
+
+      .login-card input {
+        width: 100%;
+        padding: 14px 16px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        background: #1a1a1a;
+        border: 1px solid #333;
+        color: #fff;
+        font-size: 15px;
+      }
+
+      .login-card input:focus {
+        outline: none;
+        border-color: #d7a719;
+        box-shadow: 0 0 0 1px rgba(215, 167, 25, 0.4);
+      }
+
+      .login-card button {
+        width: 100%;
+        padding: 14px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+
+      .admin-icon {
+        text-align: center;
+        font-size: 42px;
+        color: #d7a719;
+        margin-bottom: 15px;
+      }
+
+      .flash-messages {
+        margin-bottom: 15px;
+        text-align: center;
+      }
+
+      .flash {
+        font-size: 14px;
+        padding: 10px;
+        border-radius: 6px;
+      }
+
+      .flash.error {
+        background: #3a1111;
+        color: #ff7b7b;
+        border: 1px solid #ff4d4d;
+      }
+
+      .flash.success {
+        background: #123a1a;
+        color: #7bff9a;
+        border: 1px solid #4dff7b;
+      }
+
+      @media (max-width: 480px) {
+        .login-card {
+          padding: 30px 22px;
+        }
+
+        .login-title h2 {
+          font-size: 26px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header class="navbar">
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/products/monogram.jpeg') }}"
+          alt="LR Logo"
+          class="logo-img"
+        />
+        <h1>LR Fragrances - Admin</h1>
+      </div>
+    </header>
+
+    <!-- LOGIN -->
+    <div class="login-wrapper">
+      <div class="login-card">
+        <div class="admin-icon">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+
+        <div class="login-title">
+          <h2>Admin Login</h2>
+          <p>Secure access to dashboard</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+
+        <form action="/admin-login" method="POST">
+          <input
+            type="text"
+            name="username"
+            placeholder="Admin Username"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Admin Password"
+            required
+          />
+          <button class="btn-primary" type="submit">Sign In Securely</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+      // Initialize theme from localStorage
+      const themeToggle = document.getElementById("themeToggle");
+      const savedTheme = localStorage.getItem("theme") || "dark-theme";
+
+      document.body.classList.add(savedTheme);
+      updateThemeIcon();
+
+      // Toggle theme on button click
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.body.classList.contains("dark-theme");
+
+        if (isDark) {
+          document.body.classList.remove("dark-theme");
+          document.body.classList.add("light-theme");
+          localStorage.setItem("theme", "light-theme");
+        } else {
+          document.body.classList.remove("light-theme");
+          document.body.classList.add("dark-theme");
+          localStorage.setItem("theme", "dark-theme");
+        }
+        updateThemeIcon();
+      });
+
+      function updateThemeIcon() {
+        const isDark = document.body.classList.contains("dark-theme");
+        themeToggle.innerHTML = isDark
+          ? '<i class="fas fa-moon"></i>'
+          : '<i class="fas fa-sun"></i>';
+      }
+    </script>
+  </body>
+</html>

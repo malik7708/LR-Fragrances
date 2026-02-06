@@ -8,141 +8,1037 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Animations CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
 
     <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <style>
-
-        /* WHATSAPP BUTTON */
-        .whatsapp-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #25D366;
-            color: #fff;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            font-size: 28px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            transition: transform 0.3s ease;
-        }
-
-        .whatsapp-btn:hover {
-            transform: scale(1.1);
-        }
-
-        /* Banner */
-        .banner-section img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-
-    </style>
 </head>
 
 <body>
 
-    <!-- HEADER -->
-    <header class="navbar">
-        <div class="logo">
-            <img src="{{ url_for('static', filename='images/products/monogram.jpeg') }}" alt="LR Logo" class="logo-img">
-            <h1>LR Fragrances</h1>
-        </div>
+    <!-- ================= NAVBAR ================= -->
+      <header class="navbar">
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/products/monogram.jpeg') }}"
+          class="logo-img" herf="/" alt="LR Fragrances Logo"
+        />
+        <h1>LR Fragrances</h1>
+      </div>
 
-        <nav>
-            <a href="/">Home</a>
-            <a href="/shop">Shop</a>
-            <a href="/contact">Contact</a>
-            <a href="/about">About</a>
-            <a href="/cart"><i class="fa-solid fa-cart-shopping"></i>({{ cart_count }})</a>
-        </nav>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav-menu">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+        <a href="/shop">Shop</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+        <a href="/cart"
+          ><i class="fa-solid fa-cart-shopping"></i> ({{ cart_count }})</a
+        >
+      </nav>
     </header>
 
-    <!-- HERO -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+
+    <!-- ================= HERO SECTION ================= -->
     <section class="hero">
+        <div class="hero-background">
+            <div class="hero-decoration hero-decoration-1"></div>
+            <div class="hero-decoration hero-decoration-2"></div>
+        </div>
         <div class="hero-content">
-            <h2>Luxury That Defines You</h2>
-            <p>Discover premium fragrances crafted for elegance, confidence, and lasting impressions.</p>
-            <a href="/shop" class="btn-primary">Shop Now</a>
+            <span class="hero-badge animate-fade-in">Luxury Fragrance Collection</span>
+            <h1 class="hero-title animate-fade-in-down">Luxury That Defines You</h1>
+            <p class="hero-subtitle animate-fade-in-up">Discover the world of premium fragrances crafted for elegance, confidence, and lasting impressions.</p>
+            <div class="hero-buttons">
+                <a href="/shop" class="btn-primary animate-btn animate-fade-in-up">
+                    <span>Explore Collection</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="#features" class="btn-secondary animate-btn animate-fade-in-up">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-image-container">
+            <div class="hero-image-frame animate-image-zoom">
+                <img src="{{ url_for('static', filename='images/products/hero-placeholder.jpg') }}" alt="Premium Perfume" class="hero-image">
+            </div>
         </div>
     </section>
-
-    <!-- BANNER -->
+    
+  <!-- BANNER SLIDER -->
     <section class="banner-section">
-        <img src="{{ url_for('static', filename='images/products/banner.jpeg') }}" alt="LR Fragrances Banner">
-    </section>
-
-    <!-- FEATURES -->
-    <section class="features">
-        <div class="feature-box">
-            <h3>Premium Quality</h3>
-            <p>Long-lasting fragrances made with high-quality ingredients.</p>
+        <div class="slider">
+    
+            <div class="slide active">
+                <img src="/static/images/products/banner1.jpeg" alt="Banner 1">
+            </div>
+    
+            <div class="slide">
+                <img src="/static/images/products/banner2.jpeg" alt="Banner 2">
+            </div>
+    
+            <div class="slide">
+                <img src="/static/images/products/banner3.jpeg" alt="Banner 3">
+            </div>
+    
+            <!-- Dots -->
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+    
         </div>
-        <div class="feature-box">
+    </section>
+    
+    
+    <!-- FEATURES -->
+      <h2 class="section-title animate-fade-in-up">Why Choose LR Fragrances</h2>
+    <section class="features" id="features">
+        <div class="feature-box animate-feature-box stagger-item-1">
+            <div class="feature-icon">
+              <i class="fas fa-gem"></i>
+            </div>
+            <h3>Premium Quality</h3>
+            <p>
+              Crafted with high-quality ingredients for long-lasting, luxurious
+              fragrances.
+            </p>
+          </div>
+        <div class="feature-box animate-feature-box stagger-item-2">
+            <div class="feature-icon">
+                <i class="fas fa-cash-register"></i> 
+            </div>
             <h3>Cash on Delivery</h3>
             <p>Pay easily at your doorstep anywhere in Pakistan.</p>
         </div>
-        <div class="feature-box">
+        </div>
+        <div class="feature-box animate-feature-box stagger-item-3">
+            <div class="feature-icon">
+              <i class="fas fa-truck"></i>
+            </div>
+            <h3>Fast Delivery</h3>
+            <p>
+              Quick and reliable delivery across Pakistan with real-time
+              tracking.
+            </p>
+          </div>
+        <div class="feature-box animate-feature-box stagger-item-4">
+              <div class="feature-icon">
+              <i class="fas fa-money-bill-wave"></i>
+            </div>
             <h3>JazzCash / EasyPaisa</h3>
             <p>Fast and secure digital payments supported.</p>
         </div>
+        <div class="feature-box animate-feature-box stagger-item-5">
+            <div class="feature-icon">
+              <i class="fas fa-undo"></i>
+            </div>
+            <h3>Easy Returns</h3>
+            <p>Hassle-free returns within 14 days if you're not satisfied.</p>
+          </div>
+            <div class="feature-box animate-feature-box stagger-item-6">
+            <div class="feature-icon">
+              <i class="fas fa-headset"></i>
+            </div>
+            <h3>24/7 Support</h3>
+            <p>Dedicated customer support team ready to assist you anytime.</p>
+          </div>
     </section>
-
-    <!-- ABOUT -->
-    <section class="about-preview">
-        <div class="about-content">
-            <h2>About LR Fragrances</h2>
-            <p>
-                LR Fragrances brings you a curated collection of luxury perfumes designed
-                to match your personality and lifestyle. Each scent is crafted to leave
-                a powerful and memorable impression.
-            </p>
-            <a href="/about" class="btn-secondary">Learn More</a>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <p>© 2025 LR Fragrances. All Rights Reserved.</p>
-        <div class="footer-links">
-            <p>
-                <a href="/support">Customer Support</a> |
-                <a href="/contact">Contact</a>
-            </p>
-        </div>
-        <div class="social-section">
-            <h4>Follow us</h4>
-            <div class="social-icons">
-                <a href="https://www.facebook.com/share/16mTFkThmz/" target="_blank"><i
-                        class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/lrperfumes5" target="_blank"><i
-                        class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@lrperfumes5" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+    <!-- ================= ABOUT PREVIEW ================= -->
+    <section class="about-preview animate-section">
+        <div class="about-container">
+            <div class="about-content">
+                <span class="section-badge animate-fade-in">About Us</span>
+                <h2 class="about-title animate-fade-in-up">LR Fragrances: Your Fragrance Destination</h2>
+                <p class="about-text animate-fade-in-up">
+                    LR Fragrances is your premier destination for luxury perfumes. We bring you a carefully curated collection of world-class fragrances designed to elevate your personal style and make a lasting impression. Each scent in our collection is handpicked for its quality, longevity, and ability to reflect sophisticated taste.
+                </p>
+                <div class="about-features">
+                    <div class="about-feature animate-slide-in-left stagger-item-1">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Authentic & Certified Products</span>
+                    </div>
+                    <div class="about-feature animate-slide-in-left stagger-item-2">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Expert Fragrance Consultants</span>
+                    </div>
+                    <div class="about-feature animate-slide-in-left stagger-item-3">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Competitive Pricing & Offers</span>
+                    </div>
+                </div>
+                <a href="/about" class="btn-primary animate-btn">Discover Our Story</a>
+            </div>
+            <div class="about-image">
+                <div class="about-image-frame animate-image-zoom">
+                    <img src="{{ url_for('static', filename='images/products/about-fragrances.png') }}" alt="LR Fragrances Collection">
+                </div>
             </div>
         </div>
-    </footer>
+    </section>
 
+    <!-- ================= CTA SECTION ================= -->
+    <section class="cta-section animate-section-delay">
+        <div class="cta-content">
+            <h2 class="animate-fade-in-down">Ready to Find Your Signature Scent?</h2>
+            <p class="animate-fade-in-up">Browse our exclusive collection and discover the perfect fragrance for you.</p>
+            <a href="/shop" class="btn-primary btn-large animate-btn">
+                Shop Now
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+   <hr style="margin-top: 40px; margin-bottom: 40px; border: none; border-top: 1px solid #757272;" >
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer animate-fade-in">
+        <div class="footer-container">
+            <div class="footer-section animate-fade-in-up stagger-item-1">
+                <h4>About LR Fragrances</h4>
+                <p>Luxury fragrances for the discerning individual. Premium quality, authentic products, delivered with care.</p>
+            </div>
+            <div class="footer-section animate-fade-in-up stagger-item-2">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/shop" class="animate-link">Shop</a></li>
+                    <li><a href="/about" class="animate-link">About Us</a></li>
+                    <li><a href="/contact" class="animate-link">Contact</a></li>
+                    <li><a href="/support" class="animate-link">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section animate-fade-in-up stagger-item-3">
+                <h4>Policies</h4>
+                <ul>
+                    <li><a href="{{ url_for('privacy_policy') }}" class="animate-link">Privacy Policy</a></li>
+                    <li><a href="{{ url_for('terms') }}" class="animate-link">Terms & Conditons</a></li>
+                    <li><a href="{{ url_for('shipping_policy') }}" class="animate-link">Shipping Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-section animate-fade-in-up stagger-item-4">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/share/16mTFkThmz/" target="_blank" aria-label="Facebook" class="animate-social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/lrperfumes5" target="_blank" aria-label="Instagram" class="animate-social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@lrperfumes5" target="_blank" aria-label="TikTok" class="animate-social-icon"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 LR Fragrances. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
     <!-- WHATSAPP BUTTON -->
-    <a href="https://wa.me/message/S2X7CX7MZK75F1" target="_blank" class="whatsapp-btn">
+    <a href="https://wa.me/message/S2X7CX7MZK75F1" target="_blank" class="whatsapp-btn animate-float">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <!-- ================= STYLES ================= -->
+    <style>
+        /* ================= HERO SECTION ================= */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 60px;
+            padding: 80px 60px;
+            max-width: 100%;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .hero-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%);
+        }
+
+        .hero-decoration-1 {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            right: 50px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-decoration-2 {
+            width: 300px;
+            height: 300px;
+            bottom: 50px;
+            left: 100px;
+            animation: float 8s ease-in-out infinite 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #d4af37;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-family: "Playfair Display", serif;
+            font-size: 64px;
+            font-weight: 800;
+            color: #fff;
+            margin: 0 0 20px 0;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #aaa;
+            margin: 0 0 35px 0;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+  
+
+        .btn-large {
+            padding: 18px 50px;
+            font-size: 16px;
+        }
+
+        .hero-image-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-image-frame {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            overflow: hidden;
+        }
+
+        .hero-image {
+            max-width: 100%;
+            max-height: 200%;
+            object-fit: contain;
+        }
+
+        
+        /* ================= FEATURES SECTION ================= */
+        .features {
+            padding: 100px 30px;
+            background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+        }
+
+        .features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: "Playfair Display", serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 60px;
+            letter-spacing: -1px;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #d4af37;
+            margin: 20px auto 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.35s cubic-bezier(0.23, 1, 0.320, 1);
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 36px;
+            color: #d4af37;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .feature-card h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 22px;
+            color: #fff;
+            margin: 0 0 12px 0;
+        }
+
+        .feature-card p {
+            color: #999;
+            font-size: 14px;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        /* ================= ABOUT PREVIEW ================= */
+        .about-preview {
+            padding: 100px 30px;
+            background: #0a0a0a;
+        }
+
+        /* Light-theme overrides for About Preview */
+        body.light-theme .about-preview {
+            background: linear-gradient(135deg, #fefdfb 0%, #f5ede5 100%) !important;
+            color: #2c2c2c !important;
+        }
+        body.light-theme .about-container {
+            background: transparent !important;
+        }
+        body.light-theme .about-title {
+            color: #2c2c2c !important;
+        }
+        body.light-theme .about-text {
+            color: #5a5a5a !important;
+        }
+        body.light-theme .section-badge {
+            background: rgba(201,146,42,0.08) !important;
+            border: 1px solid rgba(201,146,42,0.12) !important;
+            color: #c9922a !important;
+        }
+        body.light-theme .about-feature {
+            color: #2c2c2c !important;
+        }
+        body.light-theme .about-feature i {
+            color: #c9922a !important;
+        }
+        body.light-theme .about-image-frame {
+            background: linear-gradient(135deg, rgba(201,146,42,0.06) 0%, rgba(201,146,42,0.02) 100%) !important;
+            border: 2px solid rgba(201,146,42,0.12) !important;
+        }
+
+        .about-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #d4af37;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .about-title {
+            font-family: "Playfair Display", serif;
+            font-size: 44px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 25px 0;
+            line-height: 1.3;
+        }
+
+        .about-text {
+            color: #aaa;
+            font-size: 16px;
+            line-height: 1.9;
+            margin: 0 0 35px 0;
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 35px;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ccc;
+        }
+
+        .about-feature i {
+            color: #d4af37;
+            font-size: 18px;
+        }
+
+        .about-image-frame {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            overflow: hidden;
+        }
+
+        .about-image-frame img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* ================= CTA SECTION ================= */
+        .cta-section {
+            padding: 100px 30px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 44px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 15px 0;
+        }
+
+        .cta-content p {
+            font-size: 18px;
+            color: #aaa;
+            margin: 0 0 35px 0;
+            line-height: 1.8;
+        }
+
+        /* ================= FOOTER ================= */
+        .section-divider {
+            border: none;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            margin: 0;
+        }
+
+        .footer {
+            background: #0a0a0a;
+            padding: 60px 30px 30px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            font-family: "Playfair Display", serif;
+            font-size: 18px;
+            color: #d4af37;
+            margin: 0 0 16px 0;
+        }
+
+        .footer-section p {
+            color: #999;
+            font-size: 14px;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #d4af37;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: #d4af37;
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* ================= FLOATING BUTTONS ================= */
+        .whatsapp-btn,
+        .theme-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            position: fixed;
+            z-index: 50;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .whatsapp-btn {
+            bottom: 100px;
+            right: 20px;
+            background: #25d366;
+            color: #fff;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .theme-toggle {
+            bottom: 20px;
+            right: 20px;
+            background: rgba(212, 175, 55, 0.9);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .theme-toggle:hover {
+            background: #d4af37;
+            transform: scale(1.1) rotate(20deg);
+        }
+
+        /* ================= RESPONSIVE DESIGN ================= */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 60px 40px;
+                min-height: auto;
+                gap: 40px;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .about-title,
+            .section-title {
+                font-size: 36px;
+            }
+
+            .slide img {
+                height: 300px;
+            }
+
+            .hero-image-frame,
+            .about-image-frame {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .hero {
+                padding: 40px 20px;
+                gap: 30px;
+            }
+
+            .hero-title {
+                font-size: 36px;
+                margin-bottom: 15px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero-image-frame {
+                height: 300px;
+            }
+
+            .section-title {
+                font-size: 28px;
+                margin-bottom: 40px;
+            }
+
+            .features {
+                display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 20px 10px;
+            }
+
+            .features-grid {
+               grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+          padding: 25px 10px;
+            }
+
+            .feature-card {
+                display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 30px 20px;
+            }
+
+            .about-preview {
+                padding: 60px 20px;
+            }
+
+            .about-title {
+                font-size: 28px;
+            }
+
+            .about-image-frame {
+                height: 350px;
+            }
+
+            .cta-section {
+                padding: 60px 20px;
+            }
+
+            .cta-content h2 {
+                font-size: 32px;
+            }
+
+            .cta-content p {
+                font-size: 16px;
+            }
+
+            .footer-container {
+                gap: 30px;
+                grid-template-columns: 1fr;
+            }
+
+            .whatsapp-btn,
+            .theme-toggle {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .whatsapp-btn {
+                bottom: 80px;
+            }
+
+            .footer-section ul li {
+                margin-bottom: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .hero {
+                padding: 30px 15px;
+                gap: 25px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-subtitle {
+                font-size: 14px;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 14px 25px;
+                font-size: 14px;
+            }
+
+            .hero-badge {
+                font-size: 10px;
+                padding: 6px 14px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
+
+            .feature-card h3 {
+                font-size: 18px;
+            }
+
+            .feature-card p {
+                font-size: 13px;
+            }
+
+            .about-title,
+            .cta-content h2 {
+                font-size: 24px;
+            }
+
+            .footer-section h4 {
+                font-size: 16px;
+            }
+
+            .footer-section p,
+            .footer-section ul li a {
+                font-size: 13px;
+            }
+
+            .social-icons a {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+        }
+    </style>
+
+  <script>
+        // Banner Slider JS
+        document.addEventListener("DOMContentLoaded", () => {
+            const slides = document.querySelectorAll(".slide");
+            const dots = document.querySelectorAll(".dot");
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle("active", i === index);
+                    dots[i].classList.toggle("active", i === index);
+                });
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                showSlide(currentIndex);
+            }
+
+            // Auto slide every 5 seconds
+            setInterval(nextSlide, 5000);
+
+            // Dot navigation
+            dots.forEach((dot, index) => {
+                dot.addEventListener("click", () => {
+                    currentIndex = index;
+                    showSlide(currentIndex);
+                });
+            });
+        });
+    </script>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- JS (FIXED) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const hamburger = document.getElementById("hamburger");
+            const nav = document.getElementById("nav-menu");
+            const overlay = document.getElementById("navOverlay");
+
+            hamburger.addEventListener("click", () => {
+                hamburger.classList.toggle("active");
+                nav.classList.toggle("active");
+                overlay.classList.toggle("active");
+            });
+
+            overlay.addEventListener("click", closeMenu);
+
+            document.querySelectorAll("#nav-menu a").forEach(link => {
+                link.addEventListener("click", closeMenu);
+            });
+
+            function closeMenu() {
+                hamburger.classList.remove("active");
+                nav.classList.remove("active");
+                overlay.classList.remove("active");
+            }
+
+        });
+    </script>
+    <!-- WHATSAPP BUTTON -->
+    <a href="https://wa.me/message/S2X7CX7MZK75F1" target="_blank" class="whatsapp-btn animate-float">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- Main JS -->
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        // Initialize theme from localStorage
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'dark-theme';
+        
+        document.body.classList.add(savedTheme);
+        updateThemeIcon();
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.body.classList.contains('dark-theme');
+            
+            if (isDark) {
+                document.body.classList.remove('dark-theme');
+                document.body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light-theme');
+            } else {
+                document.body.classList.remove('light-theme');
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark-theme');
+            }
+            updateThemeIcon();
+        });
+
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-theme');
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        }
+    </script>
 </body>
 
 </html>

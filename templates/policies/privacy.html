@@ -1,47 +1,470 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Privacy Policy | LR Fragrances</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
 
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+
+    <!-- Animations CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animations.css') }}"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Luxury Typography -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ================= LUXURY PRIVACY POLICY ================= */
+
+      body {
+        background: radial-gradient(circle at top, #151515, #000);
+      }
+
+      .policy-page {
+        max-width: 940px;
+        margin: 90px auto;
+        padding: 70px 55px;
+        background: linear-gradient(180deg, #111, #0b0b0b);
+        border-radius: 20px;
+        border: 1px solid rgba(218, 168, 19, 0.3);
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+        animation: fadeLuxury 0.9s ease forwards;
+      }
+
+      .policy-page h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 46px;
+        text-align: center;
+        color: #d7a719;
+        letter-spacing: 1.2px;
+        margin-bottom: 14px;
+      }
+
+      .policy-subtitle {
+        text-align: center;
+        color: #bbb;
+        font-size: 16px;
+        margin-bottom: 45px;
+        letter-spacing: 0.3px;
+      }
+
+      .gold-divider {
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          #d7a719,
+          transparent
+        );
+        margin: 45px 0;
+      }
+
+      /* ================= POLICY CARDS ================= */
+
+      .policy-card {
+        background: rgba(255, 255, 255, 0.035);
+        border: 1px solid rgba(215, 167, 25, 0.25);
+        border-radius: 16px;
+        padding: 36px 38px;
+        margin-bottom: 34px;
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+
+      .policy-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 45px rgba(215, 167, 25, 0.3);
+      }
+
+      .policy-card h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 24px;
+        color: #f3cc5c;
+        margin-bottom: 16px;
+        letter-spacing: 0.6px;
+      }
+
+      .policy-card p {
+        font-size: 16.5px;
+        line-height: 2;
+        color: #d8d8d8;
+        margin-bottom: 14px;
+      }
+
+      /* ================= LIGHT THEME OVERRIDES FOR PRIVACY POLICY ================= */
+      body.light-theme .policy-page {
+        background: linear-gradient(180deg, #ffffff, #faf8f4) !important;
+        border: 1px solid #e8dcc8 !important;
+        box-shadow: 0 8px 24px rgba(201, 146, 42, 0.08) !important;
+      }
+
+      body.light-theme .policy-page h1 {
+        color: #2c2c2c !important;
+      }
+
+      body.light-theme .policy-subtitle {
+        color: #5a5a5a !important;
+      }
+
+      body.light-theme .gold-divider {
+        background: linear-gradient(to right, transparent, #c9922a, transparent) !important;
+      }
+
+      body.light-theme .policy-card {
+        background: rgba(201, 146, 42, 0.03) !important;
+        border: 1px solid #e8dcc8 !important;
+      }
+
+      body.light-theme .policy-card:hover {
+        box-shadow: 0 12px 30px rgba(201, 146, 42, 0.12) !important;
+      }
+
+      body.light-theme .policy-card h2 {
+        color: #c9922a !important;
+      }
+
+      body.light-theme .policy-card p {
+        color: #5a5a5a !important;
+      }
+
+      body.light-theme .policy-footer {
+        color: #8b8b8b !important;
+      }
+
+      /* ================= FOOTER NOTE ================= */
+
+      .policy-footer {
+        margin-top: 55px;
+        text-align: center;
+        font-size: 15px;
+        color: #aaa;
+        font-style: italic;
+      }
+
+      /* ================= FONT AWESOME ICON FIX ================= */
+      i, .fa, .fas, .fab, .far {
+        opacity: 1 !important;
+        display: inline !important;
+      }
+      .theme-toggle i, .whatsapp-btn i, .social-icons i {
+        opacity: 1 !important;
+        display: inline !important;
+        font-size: inherit !important;
+      }
+      body.light-theme i, body.light-theme .fa, body.light-theme .fas, body.light-theme .fab, body.light-theme .far {
+        opacity: 1 !important;
+        display: inline !important;
+      }
+      body.light-theme .theme-toggle i {
+        color: #ffffff !important;
+        opacity: 1 !important;
+      }
+      body.light-theme .whatsapp-btn i {
+        color: #ffffff !important;
+        opacity: 1 !important;
+      }
+
+      /* ================= ANIMATION ================= */
+
+      @keyframes fadeLuxury {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ================= MOBILE RESPONSIVE ================= */
+
+      @media (max-width: 768px) {
+        .policy-page {
+          margin: 40px 16px;
+          padding: 45px 22px;
+        }
+
+        .policy-page h1 {
+          font-size: 32px;
+        }
+
+        .policy-card h2 {
+          font-size: 20px;
+        }
+
+        .policy-card p {
+          font-size: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="navbar">
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/products/monogram.jpeg') }}"
+          class="logo-img"
+        />
+        <h1>LR Fragrances</h1>
+      </div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav-menu">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+        <a href="/shop">Shop</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+        <a href="/cart"
+          ><i class="fa-solid fa-cart-shopping"></i> ({{ cart_count }})</a
+        >
+      </nav>
+    </header>
+
+    <div class="nav-overlay" id="navOverlay"></div>
 
     <section class="policy-page">
-        <h1>Privacy Policy</h1>
+      <h1>Privacy Policy</h1>
+      <p class="policy-subtitle">
+        Your privacy is treated with the same care and refinement as our
+        fragrances
+      </p>
+
+      <div class="gold-divider"></div>
+
+      <div class="policy-card">
+        <h2>Commitment to Your Privacy</h2>
         <p>
-            At <strong>LR Fragrances</strong>, your privacy is our priority. This policy
-            explains how we collect, use, and protect your personal information.
+          At LR Fragrances, protecting your personal information is a
+          fundamental part of our relationship with you. We are committed to
+          maintaining the confidentiality, integrity, and security of all data
+          shared with us, ensuring that your trust in our brand is always
+          respected.
         </p>
+        <p>
+          This Privacy Policy explains how we collect, use, store, and safeguard
+          your information when you interact with our website, place an order,
+          or communicate with our team. By using our services, you acknowledge
+          and agree to the practices outlined in this policy.
+        </p>
+      </div>
+       <div class="policy-card">
+        <p>
+          When you place an order or register with LR Fragrances, we may collect
+          personal information such as your name, contact details, shipping
+          address, and order history. This information allows us to process
+          transactions efficiently and deliver your purchases accurately.
+        </p>
+        <p>
+          Additionally, we may collect non-personal information including
+          browser type, device information, IP address, and website usage
+          patterns. This data helps us enhance website performance, improve user
+          experience, and maintain a secure online environment.
+        </p>
+      </div>
 
-        <h2>Information We Collect</h2>
-        <ul>
-            <li>Name, email address, phone number</li>
-            <li>Shipping and billing address</li>
-            <li>Order history and preferences</li>
-        </ul>
-
+      <div class="policy-card">
         <h2>How We Use Your Information</h2>
-        <ul>
-            <li>To process and deliver orders</li>
-            <li>To provide customer support</li>
-            <li>To improve our products and services</li>
-        </ul>
-
-        <h2>Data Protection</h2>
         <p>
-            We use secure technologies and strict access controls to
-            protect your information. We never sell or share your data
-            with third parties without consent.
+          Your information is used solely to provide you with a seamless and
+          personalized shopping experience. This includes order fulfillment,
+          delivery updates, customer support, and essential communication
+          related to your purchases.
         </p>
+        <p>
+          From time to time, we may use your contact details to share updates
+          about new products, exclusive offers, or important service-related
+          announcements. You may opt out of promotional communications at any
+          time without affecting your ability to shop with us.
+        </p>
+      </div>
 
-        <p class="policy-footer">
-            Last updated: January 2025
+      <div class="policy-card">
+        <h2>Data Protection & Security</h2>
+        <p>
+          LR Fragrances implements strict security measures to protect your
+          information from unauthorized access, alteration, or disclosure. We
+          utilize secure technologies and trusted service providers to ensure
+          that your data remains protected at all times.
         </p>
+        <p>
+          While no online system can guarantee absolute security, we
+          continuously review and enhance our practices to meet industry
+          standards and safeguard your privacy.
+        </p>
+      </div>
+
+      <p class="policy-footer">
+        LR Fragrances values your trust and remains dedicated to protecting your
+        privacy with elegance and integrity.
+      </p>
+      <br />
     </section>
+    <hr
+      style="
+        margin-top: 40px;
+        margin-bottom: 40px;
+        border: none;
+        border-top: 1px solid #757272;
+      "
+    />
 
-</body>
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer animate-fade-in">
+      <div class="footer-container">
+        <div class="footer-section animate-fade-in-up stagger-item-1">
+          <h4>About LR Fragrances</h4>
+          <p>
+            Luxury fragrances for the discerning individual. Premium quality,
+            authentic products, delivered with care.
+          </p>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-2">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/shop" class="animate-link">Shop</a></li>
+            <li><a href="/about" class="animate-link">About Us</a></li>
+            <li><a href="/contact" class="animate-link">Contact</a></li>
+            <li><a href="/support" class="animate-link">Support</a></li>
+          </ul>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-3">
+          <h4>Policies</h4>
+          <ul>
+            <li>
+              <a href="{{ url_for('privacy_policy') }}" class="animate-link"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('terms') }}" class="animate-link"
+                >Terms & Conditons</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('shipping_policy') }}" class="animate-link"
+                >Shipping Info</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-4">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/share/16mTFkThmz/"
+              target="_blank"
+              aria-label="Facebook"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-facebook-f"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/lrperfumes5"
+              target="_blank"
+              aria-label="Instagram"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.tiktok.com/@lrperfumes5"
+              target="_blank"
+              aria-label="TikTok"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 LR Fragrances. All Rights Reserved.</p>
+      </div>
+    </footer>
+    <!-- JS (FIXED) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.getElementById("hamburger");
+        const nav = document.getElementById("nav-menu");
+        const overlay = document.getElementById("navOverlay");
 
+        hamburger.addEventListener("click", () => {
+          hamburger.classList.toggle("active");
+          nav.classList.toggle("active");
+          overlay.classList.toggle("active");
+        });
+
+        overlay.addEventListener("click", closeMenu);
+
+        document.querySelectorAll("#nav-menu a").forEach((link) => {
+          link.addEventListener("click", closeMenu);
+        });
+
+        function closeMenu() {
+          hamburger.classList.remove("active");
+          nav.classList.remove("active");
+          overlay.classList.remove("active");
+        }
+      });
+    </script>
+
+    <!-- WHATSAPP BUTTON -->
+    <a href="https://wa.me/message/S2X7CX7MZK75F1" target="_blank" class="whatsapp-btn animate-float">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+        // Initialize theme from localStorage
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'dark-theme';
+        
+        document.body.classList.add(savedTheme);
+        updateThemeIcon();
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.body.classList.contains('dark-theme');
+            
+            if (isDark) {
+                document.body.classList.remove('dark-theme');
+                document.body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light-theme');
+            } else {
+                document.body.classList.remove('light-theme');
+                document.body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark-theme');
+            }
+            updateThemeIcon();
+        });
+
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-theme');
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        }
+    </script>
+  </body>
 </html>

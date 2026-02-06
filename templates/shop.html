@@ -1,88 +1,429 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shop | LR Fragrances</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap"
-        rel="stylesheet">
-</head>
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
 
-<body>
+    <!-- Animations CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animations.css') }}"
+    />
 
-    <!-- ================= NAVBAR ================= -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
     <header class="navbar">
-        <div class="logo">
-            <img src="{{ url_for('static', filename='images/products/monogram.jpeg') }}" alt="LR Logo" class="logo-img">
-            <h1>LR Fragrances</h1>
-        </div>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/shop">Shop</a>
-            <a href="/cart"><i class="fa-solid fa-cart-shopping"></i>({{ cart_count }})</a>
-        </nav>
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/products/monogram.jpeg') }}"
+          class="logo-img"
+        />
+        <h1>LR Fragrances</h1>
+      </div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav-menu">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+        <a href="/shop">Shop</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+        <a href="/cart"
+          ><i class="fa-solid fa-cart-shopping"></i> ({{ cart_count }})</a
+        >
+      </nav>
     </header>
 
+    <div class="nav-overlay" id="navOverlay"></div>
+
     <!-- ================= SHOP HEADER ================= -->
-    <section class="shop-header">
-        <h2>Our Collections</h2>
-        <p>Explore premium fragrances crafted for every personality.</p>
+    <section class="shop-header animate-fade-in-down">
+      <h2 class="animate-fade-in">Our Collections</h2>
+      <p class="animate-fade-in-up">
+        Explore premium fragrances crafted for every personality.
+      </p>
     </section>
 
     <!-- ================= PRODUCTS GRID ================= -->
     <section class="products">
-
-        {% if products %}
-        {% for product in products %}
-        <div class="product-card">
-
-            <div class="product-image">
-                <img src="{{ url_for('static', filename='images/products/' ~ product.image) }}"
-                    alt="{{ product.name }}">
-            </div>
-
-            <div class="product-info">
-                <h3>{{ product.name }}</h3>
-
-                <p class="size">{{ product.size }}</p>
-
-                {% if product.discount > 0 %}
-                <p class="price">
-                    <span class="old-price">PKR {{ product.price }}</span>
-                    <span class="new-price">
-                        PKR {{ product.price - (product.price * product.discount // 100) }}
-                    </span>
-                </p>
-                {% else %}
-                <p class="price">PKR {{ product.price }}</p>
-                {% endif %}
-
-                <a href="/product/{{ product.id }}" class="btn-secondary">
-                    View Details
-                </a>
-                <br>
-                <a href="/add-to-cart/{{ product.id }}" class="btn-primary">Add to Cart</a>
-
-            </div>
-
+      {% if products %} {% for product in products %}
+      <div
+        class="product-card animate-product-card"
+        style="animation-delay: calc(var(--product-index) * 0.1s)"
+      >
+        <div class="product-image animate-image-zoom">
+          <img
+            src="{{ url_for('static', filename='images/products/' ~ product.image) }}"
+            alt="{{ product.name }}"
+          />
         </div>
-        {% endfor %}
-        {% else %}
-        <p class="no-products">No products available yet.</p>
-        {% endif %}
 
+        <div class="product-info">
+          <h3>{{ product.name }}</h3>
+
+          <p class="size">{{ product.size }}</p>
+
+          {% if product.discount > 0 %}
+          <p class="price">
+            <span class="old-price">PKR {{ product.price }}</span>
+            <span class="new-price animate-price-badge">
+              PKR {{ product.price - (product.price * product.discount // 100)
+              }}
+            </span>
+          </p>
+          {% else %}
+          <p class="price">PKR {{ product.price }}</p>
+          {% endif %}
+
+          <a href="/product/{{ product.id }}" class="btn-secondary animate-btn">
+            View Details
+          </a>
+          <br />
+          <a
+            href="/add-to-cart/{{ product.id }}"
+            class="btn-primary animate-btn"
+            >Add to Cart</a
+          >
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <p class="no-products animate-fade-in">No products available yet.</p>
+      {% endif %}
     </section>
-
+    <hr
+      style="
+        margin-top: 40px;
+        margin-bottom: 40px;
+        border: none;
+        border-top: 1px solid #757272;
+      "
+    />
     <!-- ================= FOOTER ================= -->
-    <footer class="footer">
-        <p>© 2025 LR Fragrances. All Rights Reserved.</p>
+    <footer class="footer animate-fade-in">
+      <div class="footer-container">
+        <div class="footer-section animate-fade-in-up stagger-item-1">
+          <h4>About LR Fragrances</h4>
+          <p>
+            Luxury fragrances for the discerning individual. Premium quality,
+            authentic products, delivered with care.
+          </p>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-2">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/shop" class="animate-link">Shop</a></li>
+            <li><a href="/about" class="animate-link">About Us</a></li>
+            <li><a href="/contact" class="animate-link">Contact</a></li>
+            <li><a href="/support" class="animate-link">Support</a></li>
+          </ul>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-3">
+          <h4>Policies</h4>
+          <ul>
+            <li>
+              <a href="{{ url_for('privacy_policy') }}" class="animate-link"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('terms') }}" class="animate-link"
+                >Terms & Conditons</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('shipping_policy') }}" class="animate-link"
+                >Shipping Info</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-4">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/share/16mTFkThmz/"
+              target="_blank"
+              aria-label="Facebook"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-facebook-f"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/lrperfumes5"
+              target="_blank"
+              aria-label="Instagram"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.tiktok.com/@lrperfumes5"
+              target="_blank"
+              aria-label="TikTok"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 LR Fragrances. All Rights Reserved.</p>
+      </div>
     </footer>
+    <style>
+      /* ===============================
+   GLOBAL RESET & BASE
+================================ */
+      * {
+        box-sizing: border-box;
+      }
 
-</body>
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
 
+      /* ===============================
+   HERO SECTION
+================================ */
+      .hero {
+        padding: 80px 20px;
+        text-align: center;
+      }
+
+      .hero h2 {
+        font-size: clamp(26px, 5vw, 44px);
+      }
+
+      .hero p {
+        max-width: 600px;
+        margin: 14px auto;
+      }
+
+      /* ===============================
+   FEATURES (CARDS)
+================================ */
+      .features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        padding: 60px 20px;
+      }
+
+      /* Tablet */
+      @media (max-width: 1024px) {
+        .features {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .features {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ===============================
+   SHOP PRODUCTS GRID
+================================ */
+      .products {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 26px;
+        padding: 40px 20px;
+      }
+
+      /* Tablet */
+      @media (max-width: 1024px) {
+        .products {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .products {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+          padding: 25px 10px;
+        }
+      }
+
+      /* PRODUCT CARD FIX */
+      .product-card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .product-info {
+        text-align: center;
+        padding: 5px;
+      }
+
+      /* ===============================
+   BANNER SLIDER FIX (WINDOW ISSUE)
+================================ */
+      .slider {
+        height: 60vh;
+        min-height: 360px;
+        max-height: 600px;
+      }
+
+      @media (max-width: 1024px) {
+        .slider {
+          height: 45vh;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .slider {
+          height: 240px;
+        }
+      }
+
+      /* ===============================
+   FOOTER
+================================ */
+      .footer {
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      .footer-links,
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      /* ===============================
+   BUTTONS TOUCH FRIENDLY
+================================ */
+      .btn-primary,
+      .btn-secondary {
+        padding: 8px 12px;
+        font-size: 12px;
+        margin-bottom: 0px;
+        margin-top: 0px;
+      }
+
+      /* ===============================
+   FORMS (FUTURE SAFE)
+================================ */
+      input,
+      textarea,
+      select,
+      button {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      /* ===============================
+   DARK MODE SAFE (OPTIONAL)
+================================ */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #000;
+          color: #fff;
+        }
+      }
+    </style>
+
+    <!-- WHATSAPP BUTTON -->
+    <a
+      animate-float
+      href="https://wa.me/message/S2X7CX7MZK75F1"
+      target="_blank"
+      class="whatsapp-btn"
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <!-- JS (FIXED) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.getElementById("hamburger");
+        const nav = document.getElementById("nav-menu");
+        const overlay = document.getElementById("navOverlay");
+
+        hamburger.addEventListener("click", () => {
+          hamburger.classList.toggle("active");
+          nav.classList.toggle("active");
+          overlay.classList.toggle("active");
+        });
+
+        overlay.addEventListener("click", closeMenu);
+
+        document.querySelectorAll("#nav-menu a").forEach((link) => {
+          link.addEventListener("click", closeMenu);
+        });
+
+        function closeMenu() {
+          hamburger.classList.remove("active");
+          nav.classList.remove("active");
+          overlay.classList.remove("active");
+        }
+      });
+    </script>
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+      // Initialize theme from localStorage
+      const themeToggle = document.getElementById("themeToggle");
+      const savedTheme = localStorage.getItem("theme") || "dark-theme";
+
+      document.body.classList.add(savedTheme);
+      updateThemeIcon();
+
+      // Toggle theme on button click
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.body.classList.contains("dark-theme");
+
+        if (isDark) {
+          document.body.classList.remove("dark-theme");
+          document.body.classList.add("light-theme");
+          localStorage.setItem("theme", "light-theme");
+        } else {
+          document.body.classList.remove("light-theme");
+          document.body.classList.add("dark-theme");
+          localStorage.setItem("theme", "dark-theme");
+        }
+        updateThemeIcon();
+      });
+
+      function updateThemeIcon() {
+        const isDark = document.body.classList.contains("dark-theme");
+        themeToggle.innerHTML = isDark
+          ? '<i class="fas fa-moon"></i>'
+          : '<i class="fas fa-sun"></i>';
+      }
+    </script>
+  </body>
 </html>

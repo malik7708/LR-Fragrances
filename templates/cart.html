@@ -1,120 +1,300 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Cart | LR Fragrances</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
 
-<body>
+    <!-- Animations CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animations.css') }}"
+    />
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
     <header class="navbar">
-        <div class="logo">
-            <img src="{{ url_for('static', filename='images/products/monogram.jpeg') }}" alt="LR Logo" class="logo-img">
-            <h1>LR Fragrances</h1>
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='images/products/monogram.jpeg') }}"
+          class="logo-img"
+        />
+        <h1>LR Fragrances</h1>
+      </div>
 
-        </div>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/shop">Shop</a>
-            <a href="/cart"><i class="fa-solid fa-cart-shopping"></i>({{ cart_count }})</a>
-        </nav>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav-menu">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+        <a href="/shop">Shop</a>
+        <a href="/contact">Contact</a>
+        <a href="/about">About</a>
+        <a href="/cart"
+          ><i class="fa-solid fa-cart-shopping"></i> ({{ cart_count }})</a
+        >
+      </nav>
     </header>
 
-    <section class="shop-header">
-        <h2 class="cart-title">
-            <i class="fa-solid fa-cart-shopping"></i>
-            Your Cart
-        </h2>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <section class="shop-header animate-fade-in-down">
+      <h2 class="cart-title animate-fade-in">
+        <i class="fa-solid fa-cart-shopping"></i>
+        Your Cart
+      </h2>
     </section>
 
-    <section class="products">
-        {% if items %}
-        {% for item in items %}
-        <div class="product-card">
-            <img src="{{ url_for('static', filename='images/products/' ~ item.product.image) }}">
-            <div class="product-info">
-                <style>
-                   .products {
-                        display: grid;
-                        grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
-                        gap: 25px;
-                        padding: 40px;
-                    }
-                    .product-card {
-                        background: #1a1a1a;
-                        border-radius: 14px;
-                        overflow: hidden;
-                        display: flex;
-                        flex-direction: column;
-                        height: 100%;
-                        transition:
-                            transform 0.35s ease,
-                            box-shadow 0.35s ease,
-                            background 0.35s ease;
-                    }
-                    .product-card:hover {
-                        background: #242424;
-                        transform: scale(1.02) translateY(-6px);
-                        /* zoom + lift */
-                        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
-                        border: 1px solid rgba(255, 193, 7, 0.6);
-                    }
-                    .product-card img {
-                        width: 100%;
-                        height: 260px;
-                        object-fit: cover;
-                    }
+    <section class="productss">
+      {% if items %} {% for item in items %}
+      <div class="product-card animate-card">
+        <img
+          src="{{ url_for('static', filename='images/products/' ~ item.product.image) }}"
+          class="animate-image-zoom"
+          alt="{{ item.product.name }}"
+        />
+        <div class="product-info">
+          <h3>{{ item.product.name }}</h3>
 
-                    .product-info h3 {
-                        margin-bottom: 10px;
-                    }
+          <!-- Quantity Controls -->
+          <div class="qty-control">
+            <a
+              href="{{ url_for('update_cart', product_id=item.product.id, action='decrease') }}"
+              class="qty-btn animate-btn"
+              >−</a
+            >
+            <span class="qty">{{ item.qty }}</span>
+            <a
+              href="{{ url_for('update_cart', product_id=item.product.id, action='increase') }}"
+              class="qty-btn animate-btn"
+              >+</a
+            >
+          </div>
 
-                    .qty-control {
-                        display: flex;
-                        align-items: center;
-                        gap: 10px;
-                    }
+          {% if item.product.discount > 0 %}
+          <p>
+            Original Price:
+            <span style="text-decoration: line-through; color: #999"
+              >PKR {{ item.product.price }}</span
+            >
+          </p>
+          <p>
+            Discount:
+            <span style="color: #d7a719; font-weight: bold"
+              >{{ item.product.discount }}% OFF</span
+            >
+          </p>
+          <p>
+            Price per Item:
+            <strong
+              >PKR {{ item.product.price - (item.product.price *
+              item.product.discount // 100) }}</strong
+            >
+          </p>
+          <p>
+            Subtotal:
+            <strong style="color: #d7a719">PKR {{ item.subtotal }}</strong>
+          </p>
+          {% else %}
+          <p>Price: <strong>PKR {{ item.product.price }}</strong></p>
+          <p>Subtotal: <strong>PKR {{ item.subtotal }}</strong></p>
+          {% endif %}
 
-                    .qty-btn {
-                        background-color: #d7a719;
-                        color: white;
-                        border-radius: 4px;
-                        padding: 5px 10px;
-                    }
-                </style>
-                <h3>{{ item.product.name }}</h3>
-
-                <!-- Quantity Controls -->
-                <div class="qty-control">
-                    <a href="{{ url_for('update_cart', product_id=item.product.id, action='decrease') }}"
-                        class="qty-btn">−</a>
-                    <span class="qty">{{ item.qty }}</span>
-                    <a href="{{ url_for('update_cart', product_id=item.product.id, action='increase') }}"
-                        class="qty-btn">+</a>
-                </div>
-
-                <p>Subtotal: PKR {{ item.subtotal }}</p>
-                <a href="{{ url_for('remove_from_cart', product_id=item.product.id) }}" class="btn-secondary">Remove</a>
-            </div>
+          <a
+            href="{{ url_for('remove_from_cart', product_id=item.product.id) }}"
+            class="btn-secondary animate-btn"
+            >Remove</a
+          >
         </div>
-        {% endfor %}
-        {% else %}
-        <div class="cart-container">
-            <p class="empty-cart">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                Your cart is empty
-            </p>
+      </div>
+      {% endfor %} {% else %}
+      <div class="cart-container">
+        <p class="empty-cart animate-fade-in">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          Your cart is empty
+        </p>
+      </div>
+      {% endif %}
+    </section>
+
+    <section class="cart-total-section animate-fade-in-up">
+      <h3 class="cart-total animate-price-badge">
+        Total: PKR {{ total or 0 }}
+      </h3>
+      {% if items %}
+      <div class="checkout-section">
+        <a
+          href="{{ url_for('checkout') }}"
+          class="checkout-btn animate-btn animate-btn-glow"
+        >
+          <i class="fas fa-credit-card"></i>
+          Proceed to Checkout
+        </a>
+      </div>
+      {% endif %}
+    </section>
+    <hr
+      style="
+        margin-top: 40px;
+        margin-bottom: 40px;
+        border: none;
+        border-top: 1px solid #757272;
+      "
+    />
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer animate-fade-in">
+      <div class="footer-container">
+        <div class="footer-section animate-fade-in-up stagger-item-1">
+          <h4>About LR Fragrances</h4>
+          <p>
+            Luxury fragrances for the discerning individual. Premium quality,
+            authentic products, delivered with care.
+          </p>
         </div>
-        {% endif %}
-    </section>
+        <div class="footer-section animate-fade-in-up stagger-item-2">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/shop" class="animate-link">Shop</a></li>
+            <li><a href="/about" class="animate-link">About Us</a></li>
+            <li><a href="/contact" class="animate-link">Contact</a></li>
+            <li><a href="/support" class="animate-link">Support</a></li>
+          </ul>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-3">
+          <h4>Policies</h4>
+          <ul>
+            <li>
+              <a href="{{ url_for('privacy_policy') }}" class="animate-link"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('terms') }}" class="animate-link"
+                >Terms & Conditons</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('shipping_policy') }}" class="animate-link"
+                >Shipping Info</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-section animate-fade-in-up stagger-item-4">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/share/16mTFkThmz/"
+              target="_blank"
+              aria-label="Facebook"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-facebook-f"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/lrperfumes5"
+              target="_blank"
+              aria-label="Instagram"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.tiktok.com/@lrperfumes5"
+              target="_blank"
+              aria-label="TikTok"
+              class="animate-social-icon"
+              ><i class="fa-brands fa-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 LR Fragrances. All Rights Reserved.</p>
+      </div>
+    </footer>
+    <!-- WHATSAPP BUTTON -->
+    <a
+      href="https://wa.me/message/S2X7CX7MZK75F1"
+      target="_blank"
+      class="whatsapp-btn"
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <!-- JS (FIXED) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const hamburger = document.getElementById("hamburger");
+        const nav = document.getElementById("nav-menu");
+        const overlay = document.getElementById("navOverlay");
 
-    <section class="cart-total-section">
-        <h3 class="cart-total">Total: PKR {{ total or 0 }}</h3>
-    </section>
+        hamburger.addEventListener("click", () => {
+          hamburger.classList.toggle("active");
+          nav.classList.toggle("active");
+          overlay.classList.toggle("active");
+        });
 
-</body>
+        overlay.addEventListener("click", closeMenu);
 
+        document.querySelectorAll("#nav-menu a").forEach((link) => {
+          link.addEventListener("click", closeMenu);
+        });
+
+        function closeMenu() {
+          hamburger.classList.remove("active");
+          nav.classList.remove("active");
+          overlay.classList.remove("active");
+        }
+      });
+    </script>
+
+    <!-- THEME TOGGLE BUTTON -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- THEME TOGGLE SCRIPT -->
+    <script>
+      // Initialize theme from localStorage
+      const themeToggle = document.getElementById("themeToggle");
+      const savedTheme = localStorage.getItem("theme") || "dark-theme";
+
+      document.body.classList.add(savedTheme);
+      updateThemeIcon();
+
+      // Toggle theme on button click
+      themeToggle.addEventListener("click", () => {
+        const isDark = document.body.classList.contains("dark-theme");
+
+        if (isDark) {
+          document.body.classList.remove("dark-theme");
+          document.body.classList.add("light-theme");
+          localStorage.setItem("theme", "light-theme");
+        } else {
+          document.body.classList.remove("light-theme");
+          document.body.classList.add("dark-theme");
+          localStorage.setItem("theme", "dark-theme");
+        }
+        updateThemeIcon();
+      });
+
+      function updateThemeIcon() {
+        const isDark = document.body.classList.contains("dark-theme");
+        themeToggle.innerHTML = isDark
+          ? '<i class="fas fa-moon"></i>'
+          : '<i class="fas fa-sun"></i>';
+      }
+    </script>
+  </body>
 </html>
